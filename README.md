@@ -2,6 +2,29 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
 
+```js
+ng new Angular-search-using-observables
+
+npm i
+npm i bootstrap
+```
+
+```js
+// package.json
+"styles": [
+      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "src/styles.scss"
+]
+```
+
+```js
+ng g s services/country
+
+// later on exploring the Entity Pattern
+```
+
+---
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

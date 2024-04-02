@@ -1,0 +1,89 @@
+img {
+  max-width: 30px;
+}
+
+.search-field {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.clear-btn {
+  margin-left: 5px;
+  padding: 5px;
+}
+
+.search-results {
+  border-radius: 5px;
+  margin-top: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.country-flag {
+  width: 50px;
+  height: auto;
+  border-radius: 3px;
+}
+
+.country-name {
+  font-weight: bold;
+}
+
+.no-results {
+  text-align: center;
+  padding: 10px;
+  font-style: italic;
+}
+
+.container {
+  max-width: 500px;
+  margin-top: 50px;
+}
+.search-bar {
+  position: relative;
+}
+.loader {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+}
+
+
+.loading-dots {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.loading-dots::after,
+.loading-dots::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #323232;
+  animation: loading-dots 1.5s infinite ease-in-out;
+}
+
+.loading-dots::before {
+  left: -35px;
+}
+
+.loading-dots::after {
+  left: 35px;
+}
+
+@keyframes loading-dots {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
