@@ -1,16 +1,16 @@
 <div class="container">
     <form>
       <div class="form-group search-bar">
+        
         <!-- Search -->
         <input
           type="text"
           class="form-control"
           placeholder="Search..."
-          #searchBox
-          (input)="search(searchBox.value)"
+          (input)="onSearch(searchBox.value)"
         />
 
-        <!-- Progres -->
+        <!-- Progress -->
         <div class="loader" *ngIf="loading">
           <div class="anmation-loader"></div>
         </div>
@@ -34,5 +34,5 @@
             No countries found for your search.
           </div>
       </div>
-    </form>
+   </form>
 </div>
