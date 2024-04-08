@@ -15,14 +15,14 @@ import { CommonModule, NgFor } from '@angular/common';
 })
 export class AppComponent {
   title = 'Angular-search-using-observables';
-
   loading: boolean = false;
+  
   countries$!: Observable<Country[]>;
   private searchTerms = new Subject<string>();
 
   countryService = inject(CountryService);
 
-  search(term: string) {
+  onSearch(term: string) {
     this.searchTerms.next(term);
   }
   
