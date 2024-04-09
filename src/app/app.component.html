@@ -5,7 +5,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Search..."
+          placeholder="Search for a country"
           #searchBox
           (input)="onSearch(searchBox.value)"
         />
@@ -18,21 +18,19 @@
 
       <!-- Search Result -->
       <div class="search-results">
+        
         <ul class="list-group"  [ngClass]="{'no-results': (countries$ | async)?.length === 0}">
           <li class="list-group-item list-group-item-action" *ngFor="let country of countries$ | async">
-            <div class="d-flex p-2 bd-highlight">
-              <img
-                src="{{ country.flags.svg }}"
-                alt="Flag of {{ country.name.official }}"
-                class="country-flag"
-              />
-              <p class="ms-3 country-name">{{ country.name.official }}</p>
-            </div>
+              <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
+              <div class="d-flex align-items-center ms-3">
+                <i class="fas fa-search me-2"></i>
+                <p class="country-name mb-0">{{ country.name.official }}</p>
+              </div>
           </li>
         </ul>
         
         <div class="no-results" *ngIf="(countries$ | async)?.length === 0 && !isLoading">
-            No countries found for your search.
+          <span class="material-icons">search</span> No countries found for your search.
         </div>
       </div>
 
