@@ -1,6 +1,6 @@
-# Angular Search and filtering
+# Angular Fetch Search and filtering
 
-## Using stand-alone Components, Observables and Subject
+## angular fetch On Data From API. Using stand-alone Components, Observables and Subject
 
 - The first solution uses a Pipe, template with ngModel, ngModelOnChange, 2-way-binding [()]
 - The second uses template reference variable (#), event-binding ()
