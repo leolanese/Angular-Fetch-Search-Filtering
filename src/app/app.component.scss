@@ -42,48 +42,52 @@ img {
 .search-bar {
   position: relative;
 }
+
 .loader {
-  position: absolute;
-  top: 7px;
-  right: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.loading-dots {
-  display: inline-block;
-  position: relative;
-  width: 60px;
-  height: 60px;
+.loader.show {
+  display: flex;
 }
 
-.loading-dots::after,
-.loading-dots::before {
-  content: "";
-  position: absolute;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
+.animation-loader {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #f3f3f38c;
+  border-top: 5px solid #e61111;
   border-radius: 50%;
-  background-color: #323232;
-  animation: loading-dots 1.5s infinite ease-in-out;
+  animation: spin 2s linear infinite;
 }
 
-.loading-dots::before {
-  left: -35px;
-}
-
-.loading-dots::after {
-  left: 35px;
-}
-
-@keyframes loading-dots {
+@keyframes spin {
   0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   100% {
-    transform: scale(0);
+    transform: rotate(360deg);
   }
+}
+
+
+
+.container {
+  padding-top: 50px;
+  padding-bottom: 10px;
+  color: #405065;
+}
+
+.search {
+  max-width: 500px;
+  padding-bottom: 50px;
+  margin:auto;
+}
+
+.form-control {
+  box-shadow: 0 10px 40px 0 #B0C1D9;
+}
+.form-control::placeholder  {
+  font-family: FontAwesome;
 }

@@ -10,7 +10,7 @@ export class CountryService {
   endpoint: string = 'https://restcountries.com/v3.1/name/';
   http = inject(HttpClient);
   
-  searchCountry(term: string): Observable<Country[]> {
+  searchCountries(term: string): Observable<Country[]> {
     let url = `${this.endpoint}${term}`;
 
     if (!term.trim()) {

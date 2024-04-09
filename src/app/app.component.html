@@ -1,24 +1,24 @@
 <div class="container">
     <form>
-      <div class="form-group search-bar">
-        
+      <div class="search">
         <!-- Search -->
         <input
           type="text"
           class="form-control"
           placeholder="Search..."
+          #searchBox
           (input)="onSearch(searchBox.value)"
         />
 
-        <!-- Progress -->
-        <div class="loader" *ngIf="loading">
-          <div class="anmation-loader"></div>
+        <!-- Progress Bar -->
+        <div class="loader" [ngClass]="{ 'show': isLoading }">
+          <div class="animation-loader"></div>
         </div>
       </div>
 
       <!-- Search Result -->
       <div class="search-results">
-        <ul class="list-group">
+        <ul class="list-group"  [ngClass]="{'no-results': (countries$ | async)?.length === 0}">
           <li class="list-group-item list-group-item-action" *ngFor="let country of countries$ | async">
             <div class="d-flex p-2 bd-highlight">
               <img
@@ -30,9 +30,11 @@
             </div>
           </li>
         </ul>
-        <div class="no-results" *ngIf="(countries$ | async)?.length === 0">
+        
+        <div class="no-results" *ngIf="(countries$ | async)?.length === 0 && !isLoading">
             No countries found for your search.
-          </div>
+        </div>
       </div>
-   </form>
+
+    </form>
 </div>
