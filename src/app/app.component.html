@@ -1,30 +1,46 @@
 <div class="container">
+    <input 
+      [(ngModel)]="searchText" 
+      (ngModelChange)="onSearch($event)"
+      type="text"
+      class="form-control"
+      placeholder="Search using ngModel, ngModelChange and 2-way-binding" />
+
+    <ul>
+      <li *ngFor="let country of countries$ | async | filter: searchText">
+        {{ country.name?.common }}
+      </li>
+    </ul>
+</div>
+
+<hr />
+
+<div class="container">
     <form>
       <div class="search">
-        <!-- Search -->
+
         <input
-          type="text"
-          class="form-control"
-          placeholder="Search for a country"
           #searchBox
           (input)="onSearch(searchBox.value)"
+          type="text"
+          class="form-control"
+          placeholder="Search using Subject"
         />
 
-        <!-- Progress Bar -->
         <div class="loader" [ngClass]="{ 'show': isLoading }">
           <div class="animation-loader"></div>
         </div>
       </div>
 
-      <!-- Search Result -->
       <div class="search-results">
         
-        <ul class="list-group"  [ngClass]="{'no-results': (countries$ | async)?.length === 0}">
+        <pre>{{ countries$ | async | json }}</pre>
+        <ul class="list-group">
           <li class="list-group-item list-group-item-action" *ngFor="let country of countries$ | async">
-              <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
+              <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name?.official }}" class="country-flag" />
               <div class="d-flex align-items-center ms-3">
                 <i class="fas fa-search me-2"></i>
-                <p class="country-name mb-0">{{ country.name.official }}</p>
+                <p class="country-name mb-0">{{ country.name?.official }}</p>
               </div>
           </li>
         </ul>
@@ -36,3 +52,6 @@
 
     </form>
 </div>
+
+
+

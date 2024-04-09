@@ -1,9 +1,15 @@
-# Angular Search, using stand-alone Components and Observables
+# Angular Search and filtering, using stand-alone Components, Observables and Subject
+
+> The first solution uses a Pipe, template with ngModel, ngModelOnChange, 2-way-binding [()]
+
+> the second uses template reference variable (#), event-binding ()
+
+> both uses Subject, Observables and | async pipe
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
 
 ```js
-ng new Angular-search-using-observables
+ng new Angular-Search-Filtering
 
 npm i
 npm i bootstrap
