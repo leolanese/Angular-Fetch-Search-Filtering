@@ -5,7 +5,6 @@ import { CountryService } from '../../Services/country.service';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-solution1',
   standalone: true,
@@ -25,15 +24,11 @@ import { CommonModule } from '@angular/common';
             {{ country.name?.common }}
           </li>
         </ul>
-    </div>
-  `,
-  styleUrl: './solution1.component.scss'
+    </div>`
 })
 export class Solution1Component {
   title = 'Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
-  isLoading = false;
   searchText = '';
-
   countryService = inject(CountryService);
   
   countries$: Observable<Country[]> = of([]);
@@ -48,10 +43,8 @@ export class Solution1Component {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(searchTerm => {
-        this.isLoading = true;
         return this.countryService.searchCountries(searchTerm).pipe(
           switchMap(countries => {
-            this.isLoading = false;
             return of(countries);
           })
         );

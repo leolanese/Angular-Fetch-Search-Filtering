@@ -2,16 +2,53 @@ import { Component, inject } from '@angular/core';
 import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-solution2',
   standalone: true,
-  imports: [CommonModule, NgClass],
-  templateUrl: './solution2.component.html',
-  styleUrl: './solution2.component.scss'
+  imports: [CommonModule],
+  template: `
+    <h2>{{ title }}</h2>
+    <div class="container">
+      <form>
+        <div class="search">
+
+          <input
+            #searchBox
+            (input)="onSearch(searchBox.value)"
+            type="text"
+            class="form-control"
+            placeholder="Search using Subject"
+          />
+
+          <div class="loader" [ngClass]="{ 'show': isLoading }">
+            <div class="animation-loader"></div>
+          </div>
+        </div>
+
+        <div class="search-results">
+          
+          <!-- <pre>{{ countries$ | async | json }}</pre> -->
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action" *ngFor="let country of countries$ | async">
+                <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name?.official }}" class="country-flag" />
+                <div class="d-flex align-items-center ms-3">
+                  <i class="fas fa-search me-2"></i>
+                  <p class="country-name mb-0">{{ country.name?.official }}</p>
+                </div>
+            </li>
+          </ul>
+          
+          <div class="no-results" *ngIf="(countries$ | async)?.length === 0 && !isLoading">
+            <span class="material-icons">search</span> No countries found for your search.
+          </div>
+        </div>
+
+      </form>
+  </div>`
 })
 export class Solution2Component {
-  title = 'Pipe, template with ngModel, ngModelOnChange, 2-way-binding [()]';
+  title = 'Template reference variable (#), event-binding ()';
   isLoading = false;
   searchText = '';
 
