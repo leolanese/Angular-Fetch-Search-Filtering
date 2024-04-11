@@ -32,10 +32,10 @@ import { CommonModule } from '@angular/common';
           <!-- <pre>{{ countries$ | async | json }}</pre> -->
           <ul class="list-group">
             <li class="list-group-item list-group-item-action" *ngFor="let country of countries$ | async">
-                <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name?.official }}" class="country-flag" />
+                <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
                 <div class="d-flex align-items-center ms-3">
                   <i class="fas fa-search me-2"></i>
-                  <p class="country-name mb-0">{{ country.name?.official }}</p>
+                  <p class="country-name mb-0">{{ country.name.official }}</p>
                 </div>
             </li>
           </ul>

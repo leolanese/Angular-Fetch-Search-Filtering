@@ -1,53 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CountryService } from '../../Services/country.service';
-import { Observable, combineLatest, map, of, startWith } from 'rxjs';
+import { Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-export interface State {
-  abbreviation: string;
-  name: string;
-}
-
-export const states = [
-  {
-      "name": "Alabama",
-      "abbreviation": "AL"
-  },
-  {
-      "name": "Nebraska",
-      "abbreviation": "NE"
-  },
-  {
-      "name": "Nevada",
-      "abbreviation": "NV"
-  },
-  {
-      "name": "New Hampshire",
-      "abbreviation": "NH"
-  },
-  {
-      "name": "New Jersey",
-      "abbreviation": "NJ"
-  },
-  {
-      "name": "New Mexico",
-      "abbreviation": "NM"
-  },
-  {
-      "name": "New York",
-      "abbreviation": "NY"
-  },
-  {
-      "name": "Wisconsin",
-      "abbreviation": "WI"
-  },
-  {
-      "name": "Wyoming",
-      "abbreviation": "WY"
-  }
-];
+import { Country } from '../../Modules/country';
 
 @Component({
   selector: 'app-solution3',
@@ -62,8 +19,12 @@ export const states = [
         class="form-control"
         placeholder="Search using RxJS and Reactive Forms" />
      
-      <ul>
-        <li *ngFor="let state of filteredStates$ | async">{{ state?.name }}</li>
+      <ul *ngFor="let country of countries$ | async">
+        <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
+        <div class="d-flex align-items-center ms-3">
+          <i class="fas fa-search me-2"></i>
+          <p class="country-name mb-0">{{ country.name.official }}</p>
+        </div>
       </ul>  
    </div>
   `
@@ -71,25 +32,30 @@ export const states = [
 
 export class Solution3Component {
   title = 'Data filter using RxJs operators and Angular Reactive forms features'
-  states$!: Observable<State[]>;
-  filteredStates$!: Observable<State[]>;
+
   filter!: FormControl;
-  filter$!: Observable<string>;
+  countries$: Observable<Country[]> = of([]);
+
+  searchFilter$!: Observable<string>;
 
   countryService = inject(CountryService);
   http = inject(HttpClient);
 
-  // states$: Observable<State[]> = this.countryService.getStates();
-  constructor() {}
-
   ngOnInit() {
-    this.states$ = of(states);
     this.filter = new FormControl('');
-    this.filter$ = this.filter.valueChanges.pipe(startWith(''));
-    this.filteredStates$ = combineLatest(this.states$, this.filter$).pipe(
-      map(([states, filterString]) => states.filter(state => state.name.toLowerCase().indexOf(filterString.toLowerCase()) !== -1))
-    );
-  }
+    this.searchFilter$ = this.filter.valueChanges.pipe(startWith(''));
 
-  
+    this.countries$ = this.searchFilter$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(searchTerm => {
+        return this.countryService.searchCountries(searchTerm).pipe(
+          switchMap(countries => {
+            return of(countries);
+          })
+        );
+      })
+    );
+
+  }
 }
