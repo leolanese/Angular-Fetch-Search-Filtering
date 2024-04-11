@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { Solution1Component } from "./Components/solution1/solution1.component";
 import { Solution2Component } from './Components/solution2/solution2.component';
+import { Solution3Component } from './Components/solution3/solution3.component';
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -17,11 +18,13 @@ import { Solution2Component } from './Components/solution2/solution2.component';
 
       <app-solution1></app-solution1>
       <app-solution2></app-solution2>
+      <app-solution3></app-solution3>
     `,
     imports: [
         RouterOutlet, HttpClientModule, CommonModule,
         Solution1Component,
-        Solution2Component
+        Solution2Component,
+        Solution3Component
     ]
 })
 export class AppComponent {

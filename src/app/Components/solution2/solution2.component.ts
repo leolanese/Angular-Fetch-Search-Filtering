@@ -3,6 +3,7 @@ import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap 
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-solution2',
   standalone: true,

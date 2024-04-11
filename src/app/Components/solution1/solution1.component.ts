@@ -5,6 +5,7 @@ import { CountryService } from '../../Services/country.service';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-solution1',
   standalone: true,
