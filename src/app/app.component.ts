@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Observable, Subject, tap, debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
 import { Country } from './Modules/country';
-import { CountryService } from './services/country.service';
+import { CountryService } from './Services/country.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './Pipes/filter.pipe';

@@ -2,8 +2,9 @@
 
 ## angular fetch On Data From API. Using stand-alone Components, Observables and Subject
 
-- The first solution uses a Pipe, template with ngModel, ngModelOnChange, 2-way-binding [()]
-- The second uses template reference variable (#), event-binding ()
+1) data filter using RxJs operators and Angular Reactive forms features
+2) This solution uses a Pipe, template with ngModel, ngModelOnChange, 2-way-binding [()]
+3) This solution uses template reference variable (#), event-binding ()
 
 > both uses Subject, Observables and | async pipe
 
