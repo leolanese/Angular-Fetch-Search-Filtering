@@ -63,7 +63,7 @@ export const states = [
         placeholder="Search using RxJS and Reactive Forms" />
      
       <ul>
-        <li *ngFor="let state of filteredStates$ | async">{{ state.name }}</li>
+        <li *ngFor="let state of filteredStates$ | async">{{ state?.name }}</li>
       </ul>  
    </div>
   `
