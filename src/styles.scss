@@ -1,1 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
+img {
+    max-width: 30px;
+  }
+  
+  input {
+    width: 30rem;
+  }
+  
+  .search-field {
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .clear-btn {
+    margin-left: 5px;
+    padding: 5px;
+  }
+  
+  .search-results {
+    border-radius: 5px;
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .country-flag {
+    width: 50px;
+    height: auto;
+    border-radius: 3px;
+    list-style: none;
+  }
+  
+  .country-name {
+    font-weight: bold;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 50px;
+    color: #405065;
+  }
+  .search-bar {
+    position: relative;
+  }
+  
+  .loader {
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loader.show {
+    display: flex;
+  }
+  
+  .animation-loader {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #f3f3f38c;
+    border-top: 5px solid #e61111;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .form-control {
+    box-shadow: 0 10px 40px 0 #B0C1D9;
+  }
+  .form-control::placeholder  {
+    font-family: FontAwesome;
+  }
