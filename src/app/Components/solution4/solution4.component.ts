@@ -80,5 +80,4 @@ export class Solution4Component {
     this.filterFormSubsription.unsubscribe();
   }
 
-  
 }
