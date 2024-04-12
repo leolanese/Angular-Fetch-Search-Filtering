@@ -6,8 +6,9 @@
 2) Template reference variable (#) + event-binding ()
 3) Data filter using RxJs operators and Angular Reactive forms features
 4) Pipe + Angular Material
+5) Ng2SearchPipeModule
 
-> both uses Subject, Observables and | async pipe
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17+
 
