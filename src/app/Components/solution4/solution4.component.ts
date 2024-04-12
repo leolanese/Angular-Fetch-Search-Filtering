@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from '../../Pipes/search.pipe';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { CountryService } from '../../Services/country.service';
 
 @Component({
   selector: 'app-solution4',
@@ -13,11 +14,15 @@ import { HttpClient } from '@angular/common/http';
     ReactiveFormsModule,
     MatInputModule],
     template: `
-    <div class="list-container">
+     <h2>{{ title }}</h2>
+
+     <div class="container">
       <form [formGroup]="filterForm">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="{{ title }}" formControlName="searchFilter">
-        </mat-form-field>
+          <input matInput           
+            type="text"
+            class="form-control" 
+            placeholder="{{ title }}" 
+            formControlName="searchFilter" />
       </form>
       <ng-container *ngFor="let todoItem of todoData$ | async | search: 'title' : searchFilter | slice:0:5; 
           let i = index; let isEven = even; let isOdd = odd">
@@ -27,8 +32,7 @@ import { HttpClient } from '@angular/common/http';
             {{ todoItem.title }}
           </div>
       </ng-container>
-    </div>
-  `,
+     </div>`,
     styles: [`
     .list-container {
       padding: 25px;
@@ -46,17 +50,19 @@ import { HttpClient } from '@angular/common/http';
   `]
 })
 export class Solution4Component {
-  title = 'Pipe + Material';
+  title = 'Pipe + Angular Material';
 
   todoData$!: Observable<any[]> | undefined;
-  
-  filterForm: FormGroup = new FormGroup({
+    filterForm: FormGroup = new FormGroup({
     searchFilter: new FormControl<string>('')
   });
+
   filterFormSubsription: Subscription;
   searchFilter: string = '';
 
-  constructor(private httpClient: HttpClient) {
+  httpClient = inject(HttpClient);
+  
+  constructor() {
     const todoDataUrl = 'https://jsonplaceholder.typicode.com/todos';
     this.todoData$ = this.httpClient.get(todoDataUrl)
       .pipe(map(response => {
