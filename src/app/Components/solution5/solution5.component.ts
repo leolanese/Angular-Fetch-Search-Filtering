@@ -17,20 +17,24 @@ import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
      <h2>{{ title }}</h2>
 
      <div class="container">
-
-      <div>
-        <input 
-          type="text" 
-          [(ngModel)]="term"
-          placeholder="{{title}}" />
-        <div *ngFor = "let item of items |filter:term" >
-          <p>
-            {{item.name}}
-          </p>
+      <div class="row">
+        <div class="search-hero">
+          <input 
+            class="form-control" 
+            type="text" 
+            name="search" 
+            [(ngModel)]="searchText" 
+            autocomplete="off" 
+            placeholder="{{ title }}">
         </div>
-
+        <table class="table table-striped">
+          <tr *ngFor="let hero of heroes | filter:searchText">
+            <td>{{hero.country}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-     </div>`,
+     `,
     styles: [`
     .list-container {
       padding: 25px;
@@ -52,11 +56,20 @@ export class Solution5Component {
   term = '';
 
   title = 'Ng2SearchPipeModule';
-
-
-  searchFilter: string = '';
-
-  httpClient = inject(HttpClient);
+  
+  searchText: any;
+  heroes = [
+    { id: 11, name: 'Mr. Nice', country: 'India' },
+    { id: 12, name: 'Narco' , country: 'USA'},
+    { id: 13, name: 'Bombasto' , country: 'UK'},
+    { id: 14, name: 'Celeritas' , country: 'Canada' },
+    { id: 15, name: 'Magneta' , country: 'Russia'},
+    { id: 16, name: 'RubberMan' , country: 'China'},
+    { id: 17, name: 'Dynama' , country: 'Germany'},
+    { id: 18, name: 'Dr IQ' , country: 'Hong Kong'},
+    { id: 19, name: 'Magma' , country: 'South Africa'},
+    { id: 20, name: 'Tornado' , country: 'Sri Lanka'}
+  ];
   
 
 
