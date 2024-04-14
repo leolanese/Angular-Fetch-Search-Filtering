@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from '../../Pipes/search.pipe';
 import { MatInputModule } from '@angular/material/input';
-import { Observable, Subscription, debounceTime, map } from 'rxjs';
+import { Observable, Subscription, debounceTime, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CountryService } from '../../Services/country.service';
 
@@ -25,6 +25,7 @@ import { CountryService } from '../../Services/country.service';
             autocomplete="on" 
             formControlName="searchFilter" />
       </form>
+      
       <ng-container *ngFor="let todoItem of todoData$ | async | search: 'title' : searchFilter | slice:0:5; 
           let i = index; let isEven = even; let isOdd = odd">
           <div
@@ -53,15 +54,17 @@ import { CountryService } from '../../Services/country.service';
 export class Solution4Component {
   title = 'Pipe + Angular Material';
 
+  // FormGroup
   todoData$!: Observable<any[]> | undefined;
     filterForm: FormGroup = new FormGroup({
-    searchFilter: new FormControl<string>('')
+      searchFilter: new FormControl<string>('')
   });
 
   filterFormSubsription: Subscription;
   searchFilter: string = '';
 
   httpClient = inject(HttpClient);
+  countryService = inject(CountryService);
   
   constructor() {
     // TODO: move to the same API endpoint as in the previous example

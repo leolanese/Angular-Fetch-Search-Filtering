@@ -35,7 +35,6 @@ export class Solution1Component {
   
   countries$: Observable<Country[]> = of([]);
   private searchSubject = new Subject<string>();
-
   onSearch(term: string) {
     this.searchSubject.next(term);
   }

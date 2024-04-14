@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
+import { CountryService } from '../../Services/country.service';
 
 @Component({
   selector: 'app-solution5',
@@ -39,6 +40,8 @@ import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
 })
 export class Solution5Component {
   title = 'Ng2SearchPipeModule';
+
+  countryService = inject(CountryService);
   
   searchText: any;
   // TODO: move to the same API endpoint as in the previous example

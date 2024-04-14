@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CountryService } from '../../Services/country.service';
-import { Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Country } from '../../Modules/country';
@@ -40,7 +39,6 @@ export class Solution3Component {
   searchFilter$!: Observable<string>;
 
   countryService = inject(CountryService);
-  http = inject(HttpClient);
 
   ngOnInit() {
     this.filter = new FormControl('');

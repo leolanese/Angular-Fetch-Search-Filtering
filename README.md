@@ -5,7 +5,7 @@
 1) Pipe + ngModel + ngModelOnChange + 2-way-binding [()]
 2) Template reference variable (#) + event-binding ()
 3) RxJs operators and Angular Reactive forms features
-4) Pipe + Angular Material
+4) Pipe + Angular Material + FormGroup
 5) Ng2SearchPipeModule
 
 ---

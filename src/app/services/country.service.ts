@@ -13,9 +13,7 @@ export class CountryService {
   searchCountries(term: string): Observable<Country[]> {
     let url = `${this.endpoint}${term}`;
 
-    if (!term.trim()) {
-      return of([]);
-    }
+    if (!term.trim()) return of([]);
 
     return this.http
       .get<Country[]>(url)
