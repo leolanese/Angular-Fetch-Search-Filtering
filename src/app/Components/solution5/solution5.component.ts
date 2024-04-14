@@ -27,11 +27,11 @@ import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
             autocomplete="off" 
             placeholder="{{ title }}">
         </div>
-        <table class="table table-striped">
-          <tr *ngFor="let hero of heroes | filter:searchText">
-            <td>{{hero.country}}</td>
-          </tr>
-        </table>
+          <ul>
+            @for(hero of heroes | filter:searchText; track hero){
+              <li>{{hero.name}}</li>
+            }
+          </ul>
       </div>
     </div>
      `,
