@@ -11,8 +11,8 @@ import { CountryService } from '../../Services/country.service';
   selector: 'app-solution4',
   standalone: true,
   imports: [CommonModule, SearchPipe, FormsModule, 
-    ReactiveFormsModule,
-    MatInputModule],
+            ReactiveFormsModule,
+            MatInputModule],
     template: `
      <h2>{{ title }}</h2>
 

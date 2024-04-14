@@ -7,13 +7,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SearchPipe implements PipeTransform {
     transform(data: any[] | null, filterProperty: string, filter: string): any[] {
-    if (!data) {
-        return [];
-    }
+        if (!data) return [];
 
-    const filterValue = filter.toLowerCase();
-    return filterValue
-        ? data.filter(item => item[filterProperty].toLowerCase().includes(filterValue))
-        : data;
+        // 2
+        const filterValue = filter.toLowerCase();
+
+        return data.filter((x) => {
+            console.table(x)
+            return x.title.toLowerCase().includes(filterValue);
+        });
     }
 }
