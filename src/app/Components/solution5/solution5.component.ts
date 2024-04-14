@@ -20,12 +20,12 @@ import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
       <div class="row">
         <div class="search-hero">
           <input 
+            [(ngModel)]="searchText" 
             class="form-control" 
             type="text" 
             name="search" 
-            [(ngModel)]="searchText" 
-            autocomplete="off" 
-            placeholder="{{ title }}">
+            autocomplete="on" 
+            placeholder="{{ title }}" />
         </div>
           <ul>
             @for(hero of heroes | filter:searchText; track hero){
@@ -35,29 +35,13 @@ import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
       </div>
     </div>
      `,
-    styles: [`
-    .list-container {
-      padding: 25px;
-    }
-
-    .todo-item {
-      padding: 10px;
-    }
-    .even-todo-item {
-      background-color: red;
-    }
-    .odd-todo-item {
-      background-color: lightblue;
-    }
-  `]
+    styles: ``
 })
 export class Solution5Component {
-  items: any[] = [{ name: "archie" }, { name: "jake" }, { name: "richard" }];
-  term = '';
-
   title = 'Ng2SearchPipeModule';
   
   searchText: any;
+  // TODO: move to the same API endpoint as in the previous example
   heroes = [
     { id: 11, name: 'Mr. Nice', country: 'India' },
     { id: 12, name: 'Narco' , country: 'USA'},
@@ -71,6 +55,4 @@ export class Solution5Component {
     { id: 20, name: 'Tornado' , country: 'Sri Lanka'}
   ];
   
-
-
 }

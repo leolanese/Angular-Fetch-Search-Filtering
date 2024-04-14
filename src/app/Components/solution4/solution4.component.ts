@@ -13,7 +13,7 @@ import { CountryService } from '../../Services/country.service';
   imports: [CommonModule, SearchPipe, FormsModule, 
             ReactiveFormsModule,
             MatInputModule],
-    template: `
+  template: `
      <h2>{{ title }}</h2>
 
      <div class="container">
@@ -22,6 +22,7 @@ import { CountryService } from '../../Services/country.service';
             type="text"
             class="form-control" 
             placeholder="{{ title }}" 
+            autocomplete="on" 
             formControlName="searchFilter" />
       </form>
       <ng-container *ngFor="let todoItem of todoData$ | async | search: 'title' : searchFilter | slice:0:5; 
@@ -32,21 +33,21 @@ import { CountryService } from '../../Services/country.service';
             {{ todoItem.title }}
           </div>
       </ng-container>
-     </div>`,
+    </div>`,
     styles: [`
-    .list-container {
-      padding: 25px;
-    }
+      .list-container {
+        padding: 25px;
+      }
 
-    .todo-item {
-      padding: 10px;
-    }
-    .even-todo-item {
-      background-color: red;
-    }
-    .odd-todo-item {
-      background-color: lightblue;
-    }
+      .todo-item {
+        padding: 10px;
+      }
+      .even-todo-item {
+        background-color: red;
+      }
+      .odd-todo-item {
+        background-color: lightblue;
+      }
   `]
 })
 export class Solution4Component {
@@ -63,6 +64,7 @@ export class Solution4Component {
   httpClient = inject(HttpClient);
   
   constructor() {
+    // TODO: move to the same API endpoint as in the previous example
     const todoDataUrl = 'https://jsonplaceholder.typicode.com/todos';
     this.todoData$ = this.httpClient.get(todoDataUrl)
       .pipe(map(response => {

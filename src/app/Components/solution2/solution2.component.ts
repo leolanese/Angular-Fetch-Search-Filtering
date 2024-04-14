@@ -19,8 +19,8 @@ import { CommonModule } from '@angular/common';
             (input)="onSearch(searchBox.value)"
             type="text"
             class="form-control"
-            placeholder="Search using Subject"
-          />
+            autocomplete="on" 
+            placeholder="Search using Subject" />
 
           <div class="loader" [ngClass]="{ 'show': isLoading }">
             <div class="animation-loader"></div>

@@ -17,6 +17,7 @@ import { Country } from '../../Modules/country';
         [formControl]="filter" 
         type="text"
         class="form-control"
+        autocomplete="on" 
         placeholder="Search using RxJS and Reactive Forms" />
      
       <ul *ngFor="let country of countries$ | async">
