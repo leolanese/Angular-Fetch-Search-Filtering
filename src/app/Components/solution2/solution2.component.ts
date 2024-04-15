@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, Subscription } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { CommonModule } from '@angular/common';
@@ -20,10 +20,6 @@ import { CommonModule } from '@angular/common';
             autocomplete="on" 
             placeholder="{{ title }}" />
 
-            <div class="loader" [ngClass]="{ 'show': isLoading }">
-              <div class="animation-loader"></div>
-            </div>
-
             <!-- <pre>{{ countries$ | async | json }}</pre> -->
             <ul>
                 @for(country of countries$ | async; track country.idd) {
@@ -36,41 +32,40 @@ import { CommonModule } from '@angular/common';
                   </li>
                 }
             </ul>
-        
-            <div class="no-results" *ngIf="(countries$ | async)?.length === 0 && !isLoading">
-              <span class="material-icons">search</span> No countries found for your search.
-            </div>
+
       </form>
   </div>`
 })
 export class Solution2Component {
-  title = '2- Template reference variable (#), event-binding ()';
-  isLoading = false;
+  title = '2- Template reference variable (#), event-binding()';
   searchText = '';
 
   countryService = inject(CountryService);
   
   countries$: Observable<Country[]> = of([]);
   private searchSubject = new Subject<string>();
-
+  private filterFormSubscription!: Subscription;
+  
   onSearch(term: string) {
     this.searchSubject.next(term);
   }
 
   ngOnInit() {
-    this.countries$ = this.searchSubject.pipe(
+    this.filterFormSubscription = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(searchTerm => {
-        this.isLoading = true;
-        return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => {
-            this.isLoading = false;
-            return of(countries);
-          })
-        );
-      })
-    );
+      switchMap(searchTerm => 
+          this.countryService.searchCountries(searchTerm).pipe(
+            switchMap(countries => of(countries))
+          )
+      )
+    ).subscribe(filteredData => {
+      this.countries$ = of(filteredData);
+    });
+  }
+
+  ngOnDestroy(): void {
+    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
   }
 
 }

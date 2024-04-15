@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, first, take, Subscription } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { FilterPipe } from '../../Pipes/filter.pipe';
@@ -36,8 +36,10 @@ export class Solution1Component {
   title = '1- Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
   searchFilter = '';
   countries$: Observable<Country[]> = of([]);
-  private searchSubject = new Subject<string>();
 
+  private searchSubject = new Subject<string>();
+  private filterFormSubscription!: Subscription;
+  
   countryService = inject(CountryService);
   
   onSearch(term: string) {
@@ -45,14 +47,21 @@ export class Solution1Component {
   }
 
   ngOnInit() {
-    this.countries$ = this.searchSubject.pipe(
+   this.filterFormSubscription = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(searchTerm => {
         return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => of(countries))
+          switchMap(countries => of(countries)),
         );
       })
-    );
+    ).subscribe(filteredData => {
+      this.countries$ = of(filteredData);
+    });
   }
+
+  ngOnDestroy(): void {
+    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
+  }
+  
 }

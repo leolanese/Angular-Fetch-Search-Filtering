@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CountryService } from '../../Services/country.service';
-import { Observable, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
+import { Observable, Subject, debounceTime, distinctUntilChanged, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Country } from '../../Modules/country';
@@ -37,7 +37,8 @@ export class Solution3Component {
   searchFilter!: FormControl;
   countries$: Observable<Country[]> = of([]);
   searchFilter$!: Observable<string>;
-
+  private destroy$ = new Subject<void>();
+  
   countryService = inject(CountryService);
 
   ngOnInit() {
@@ -51,8 +52,13 @@ export class Solution3Component {
         return this.countryService.searchCountries(searchTerm).pipe(
           switchMap(countries => of(countries))
         );
-      })
+      }),
+      takeUntil(this.destroy$)
     );
+  }
 
+  ngOnDestroy() {
+    this.destroy$.next(); // Emit a value to signal completion
+    this.destroy$.complete();
   }
 }

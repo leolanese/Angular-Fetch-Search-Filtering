@@ -45,29 +45,14 @@ export class Solution5Component implements OnInit {
   title = '5- Ng2SearchPipeModule Pipe  + Reactive form (formControlName)';
   searchFilter: string = '';
   countryService = inject(CountryService);
-  
-  searchText: any;
-  // TODO: move to the same API endpoint as in the previous example
-  heroes = [
-    { id: 11, name: 'Mr. Nice', country: 'India' },
-    { id: 12, name: 'Narco' , country: 'USA'},
-    { id: 13, name: 'Bombasto' , country: 'UK'},
-    { id: 14, name: 'Celeritas' , country: 'Canada' },
-    { id: 15, name: 'Magneta' , country: 'Russia'},
-    { id: 16, name: 'RubberMan' , country: 'China'},
-    { id: 17, name: 'Dynama' , country: 'Germany'},
-    { id: 18, name: 'Dr IQ' , country: 'Hong Kong'},
-    { id: 19, name: 'Magma' , country: 'South Africa'},
-    { id: 20, name: 'Tornado' , country: 'Sri Lanka'}
-  ];
+
   countries$: Observable<Country[]> = of([]);
-  searchSubject: any;
 
   filterFormSubscription?: Subscription = new Subscription(); 
 
   filterForm: FormGroup = new FormGroup({
     searchFilter: new FormControl<string>('')
-});
+  });
 
   ngOnInit() {
     this.filterFormSubscription = this.filterForm.get('searchFilter')?.valueChanges.pipe(
@@ -75,11 +60,15 @@ export class Solution5Component implements OnInit {
       distinctUntilChanged(),
       switchMap((searchTerm) => {
         return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => of(countries))
+          switchMap(countries => of(countries)),
         );
       })
     ).subscribe((filteredData) => {
       this.countries$ = of(filteredData);
     });
+  }
+
+  ngOnDestroy(): void {
+    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
   }
 }
