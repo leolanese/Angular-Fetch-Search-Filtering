@@ -1,19 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearchPipe } from '../../Pipes/search.pipe';
+import { FilterPipe } from '../../Pipes/filter.pipe';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
 import { CountryService } from '../../Services/country.service';
 
 @Component({
   selector: 'app-solution5',
   standalone: true,
-  imports: [CommonModule, SearchPipe, FormsModule, 
-    ReactiveFormsModule,
-    MatInputModule, Ng2SearchPipeModule],
+  imports: [CommonModule, FilterPipe, FormsModule, 
+            ReactiveFormsModule,
+            MatInputModule, Ng2SearchPipeModule],
     template: `
      <h2>{{ title }}</h2>
 
@@ -29,7 +28,7 @@ import { CountryService } from '../../Services/country.service';
             placeholder="{{ title }}" />
         </div>
           <ul>
-            @for(hero of heroes | filter:searchText; track hero){
+            @for(hero of heroes | filter: searchText; track hero){
               <li>{{hero.name}}</li>
             }
           </ul>
@@ -39,7 +38,7 @@ import { CountryService } from '../../Services/country.service';
     styles: ``
 })
 export class Solution5Component {
-  title = 'Ng2SearchPipeModule';
+  title = '5- Ng2SearchPipeModule dependency';
 
   countryService = inject(CountryService);
   

@@ -31,7 +31,7 @@ import { Country } from '../../Modules/country';
 })
 
 export class Solution3Component {
-  title = 'Data filter using RxJs operators and Angular Reactive forms'
+  title = '3- Data filter using RxJs operators and Angular Reactive forms'
 
   filter!: FormControl;
   countries$: Observable<Country[]> = of([]);

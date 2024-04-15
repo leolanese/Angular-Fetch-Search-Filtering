@@ -1,12 +1,27 @@
 # Angular Fetch Search and filtering
 
-## angular fetch On Data From API. Using stand-alone Components, Observables and Subject
+## Angular fetch On Data From API. Using stand-alone Components, Observables and Subject strategies
 
-1) Pipe + ngModel + ngModelOnChange + 2-way-binding [()]
-2) Template reference variable (#) + event-binding ()
-3) RxJs operators and Angular Reactive forms features
-4) Pipe + Angular Material + FormGroup
-5) Ng2SearchPipeModule
+### Goal Keys
+
+- Subscribe to form input value changes
+- Subcribe to API call
+- Show Filter data based on search input term
+
+## Diffetent solutions
+
+1) Pipe + ngModel + ngModelOnChange() subcription + 2-way-binding[()]
+
+2) Template reference variable (#) + event-binding()
+
+3) RxJs operators + Reactive forms (formControl)
+
+4) Pipe + Angular Material + + Reactive forms (FormGroup, formControlName)
+We'll be subscribing to two observables:
+- The `filterForm.get('searchFilter')?.valueChanges` subscription from the searchFilter form control
+- The Observable returned from the HTTP request to the API endpoint
+
+5) Ng2SearchPipeModule dependency
 
 ---
 

@@ -8,12 +8,12 @@ import { Country } from '../Modules/country';
 })
 export class FilterPipe implements PipeTransform {
   transform(items: Country[] | null | undefined, searchText: string): Country[] {
-    if (!items || !searchText) return [];
+    if (!items) return [];
 
     searchText = searchText.toLowerCase();
 
-    return items.filter( (item) => {
-      console.table(item)
+    return items.filter(item => {
+      console.table(item);
       return item.name.common.toLowerCase().includes(searchText);
     });
   }
