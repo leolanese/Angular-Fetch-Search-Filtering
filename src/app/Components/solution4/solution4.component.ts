@@ -1,4 +1,4 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
@@ -9,8 +9,8 @@ import { CountryService } from '../../Services/country.service';
 @Component({
   selector: 'app-solution4',
   standalone: true,
-  imports: [CommonModule, FilterPipe, FormsModule, 
-            ReactiveFormsModule,
+  imports: [CommonModule, FilterPipe,
+            FormsModule, ReactiveFormsModule,
             MatInputModule],
   template: `
      <h2>{{ title }}</h2>

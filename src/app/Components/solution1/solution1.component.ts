@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
           (ngModelChange)="onSearch($event)"
           type="text"
           class="form-control"
-          placeholder="Search using ngModel, ngModelChange and 2-way-binding" />
+          placeholder="{{ title }}" />
 
         <ul *ngFor="let country of countries$ | async | filter: searchText">
           <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
@@ -31,10 +31,11 @@ import { CommonModule } from '@angular/common';
 export class Solution1Component {
   title = '1- Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
   searchText = '';
-  countryService = inject(CountryService);
-  
   countries$: Observable<Country[]> = of([]);
   private searchSubject = new Subject<string>();
+
+  countryService = inject(CountryService);
+  
   onSearch(term: string) {
     this.searchSubject.next(term);
   }

@@ -8,7 +8,8 @@ import { Country } from '../../Modules/country';
 @Component({
   selector: 'app-solution3',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+            FormsModule, ReactiveFormsModule],
   template: `
    <h2>{{ title }}</h2> 
    <div class="container">
@@ -17,7 +18,7 @@ import { Country } from '../../Modules/country';
         type="text"
         class="form-control"
         autocomplete="on" 
-        placeholder="Search using RxJS and Reactive Forms" />
+        placeholder="{{ title }}" />
      
       <ul *ngFor="let country of countries$ | async">
         <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
@@ -35,7 +36,6 @@ export class Solution3Component {
 
   filter!: FormControl;
   countries$: Observable<Country[]> = of([]);
-
   searchFilter$!: Observable<string>;
 
   countryService = inject(CountryService);
