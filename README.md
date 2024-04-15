@@ -44,8 +44,9 @@ npm i bootstrap
 
 ```js
 ng g s services/country
-
 // later on exploring the Entity Pattern
+
+ng g p pipes/filter
 ```
 
 ---
