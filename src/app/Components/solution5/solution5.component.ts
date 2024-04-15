@@ -24,7 +24,8 @@ import { Country } from '../../Modules/country';
                 type="text" 
                 name="search" 
                 autocomplete="on" 
-                placeholder="{{ title }}" />
+                placeholder="{{ title }}"
+                aria-label="search" />
           </form>
 
           <ul>
