@@ -14,7 +14,7 @@ import { Country } from '../../Modules/country';
    <h2>{{ title }}</h2> 
    <div class="container">
       <input 
-        [formControl]="filter" 
+        [formControl]="searchFilter" 
         type="text"
         class="form-control"
         autocomplete="on" 
@@ -32,17 +32,17 @@ import { Country } from '../../Modules/country';
 })
 
 export class Solution3Component {
-  title = '3- Data filter using RxJs operators and Angular Reactive forms'
+  title = '3- valueChanges + Angular Reactive forms (FormControl)'
 
-  filter!: FormControl;
+  searchFilter!: FormControl;
   countries$: Observable<Country[]> = of([]);
   searchFilter$!: Observable<string>;
 
   countryService = inject(CountryService);
 
   ngOnInit() {
-    this.filter = new FormControl('');
-    this.searchFilter$ = this.filter.valueChanges.pipe(startWith(''));
+    this.searchFilter = new FormControl('');
+    this.searchFilter$ = this.searchFilter.valueChanges.pipe(startWith(''));
 
     this.countries$ = this.searchFilter$.pipe(
       debounceTime(300),

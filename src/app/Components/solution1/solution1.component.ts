@@ -8,7 +8,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-solution1',
   standalone: true,
-  imports: [CommonModule, FilterPipe, FormsModule],
+  imports: [CommonModule, 
+            FilterPipe, 
+            FormsModule],
   template: `
     <h2>{{ title }}</h2>
     <div class="container">
@@ -20,14 +22,13 @@ import { CommonModule } from '@angular/common';
           placeholder="{{ title }}" />
 
         <ul>
-          @for(country of countries$ | async | filter: searchFilter; track country.idd) {
+          @for(country of countries$ | async | filter:searchFilter; track country.idd) {
             <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
             <div class="d-flex align-items-center ms-3">
               <i class="fas fa-search me-2"></i>
               <p class="country-name mb-0">{{ country.name.official }}</p>
             </div>
           }
-
         </ul>
     </div>`
 })
