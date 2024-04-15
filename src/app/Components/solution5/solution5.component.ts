@@ -38,7 +38,7 @@ import { CountryService } from '../../Services/country.service';
     styles: ``
 })
 export class Solution5Component {
-  title = '5- Ng2SearchPipeModule dependency';
+  title = '5- Pipe + Ng2SearchPipeModule dependency  + 2-way-binding[()]';
 
   countryService = inject(CountryService);
   

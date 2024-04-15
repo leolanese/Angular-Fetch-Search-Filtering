@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
@@ -27,15 +27,19 @@ import { CountryService } from '../../Services/country.service';
             placeholder="{{ title }}" 
             autocomplete="on" />
       </form>
-      
-      <ng-container *ngFor="let todoItem of todoData$ | async | filter: searchFilter | slice:0:5; 
-                            let i = index; let isEven = even; let isOdd = odd">
-          <div
-            class="todo-item"
-            [ngClass]="{'even-todo-item': isEven, 'odd-todo-item': isOdd}">
-            {{ todoItem.name.common }}
+
+      <ng-container> 
+          @for(country of countries$ | async | filter: searchFilter | slice:0:5; track country.idd) {
+           <div class="todo-item">
+              <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
+              <div class="d-flex align-items-center ms-3">
+                <i class="fas fa-search me-2"></i>
+                <p class="country-name mb-0">{{ country.name.official }}</p>
+              </div>
           </div>
+         }
       </ng-container>
+
     </div>`,
     styles: [`
       .list-container {
@@ -54,8 +58,8 @@ import { CountryService } from '../../Services/country.service';
   `]
 })
 export class Solution4Component implements OnInit, OnDestroy  {
-  title = '4- Pipe + Angular Material + + Reactive forms (FormGroup, formControlName)';
-  todoData$!: Observable<any[]> | undefined;
+  title = '4- Pipe + Angular Material + Reactive forms (FormGroup, formControlName)';
+  countries$!: Observable<any[]> | undefined;
   searchFilter: string = '';
   filterFormSubscription?: Subscription = new Subscription(); 
 
@@ -65,7 +69,6 @@ export class Solution4Component implements OnInit, OnDestroy  {
   filterForm: FormGroup = new FormGroup({
       searchFilter: new FormControl<string>('')
   });
-
      
   ngOnInit() {
     this.filterFormSubscription = this.filterForm.get('searchFilter')?.valueChanges.pipe(
@@ -73,13 +76,11 @@ export class Solution4Component implements OnInit, OnDestroy  {
       distinctUntilChanged(),
       switchMap((searchTerm) => {
         return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap((countries) => {
-            return of(countries);
-          })
+          switchMap(countries => of(countries))
         );
       })
     ).subscribe((filteredData) => {
-      this.todoData$ = of(filteredData);
+      this.countries$ = of(filteredData);
     });
   }
 

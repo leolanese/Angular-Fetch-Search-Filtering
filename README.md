@@ -21,7 +21,7 @@ We'll be subscribing to two observables:
 - The `filterForm.get('searchFilter')?.valueChanges` subscription from the searchFilter form control
 - The Observable returned from the HTTP request to the API endpoint
 
-5) Ng2SearchPipeModule dependency
+5) Pipe + Ng2SearchPipeModule dependency + 2-way-binding[()]
 
 ---
 

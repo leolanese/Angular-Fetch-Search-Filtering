@@ -49,9 +49,7 @@ export class Solution3Component {
       distinctUntilChanged(),
       switchMap(searchTerm => {
         return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => {
-            return of(countries);
-          })
+          switchMap(countries => of(countries))
         );
       })
     );
