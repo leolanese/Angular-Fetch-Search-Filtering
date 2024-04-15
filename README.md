@@ -2,13 +2,13 @@
 
 ## Angular fetch On Data From API. Using stand-alone Components, Observables and Subject strategies
 
-### Goal Keys
+### Goal Keys 
 
 - Subscribe to form input value changes
 - Subcribe to API call
 - Show Filter data based on search input term
 
-## Diffetent solutions
+## Different solutions to filter data based on search input
 
 1) Pipe + ngModel + ngModelOnChange() subcription + 2-way-binding[()]
 
