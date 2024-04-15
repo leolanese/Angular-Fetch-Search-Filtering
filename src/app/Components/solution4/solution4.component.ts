@@ -24,8 +24,7 @@ import { CountryService } from '../../Services/country.service';
             formControlName="searchFilter"        
             type="text"
             class="form-control" 
-            placeholder="{{ title }}" 
-            autocomplete="on" />
+            placeholder="{{ title }}" />
       </form>
 
       <ng-container> 

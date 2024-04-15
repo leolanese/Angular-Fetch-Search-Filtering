@@ -28,7 +28,7 @@ import { Country } from '../../Modules/country';
           </form>
 
           <ul>
-            @for(country of countries$ | async | filter:searchFilter; track country){
+            @for(country of countries$ | async | filter:searchFilter; track country.idd){
               <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
               <div class="d-flex align-items-center ms-3">
                 <i class="fas fa-search me-2"></i>
@@ -42,7 +42,7 @@ import { Country } from '../../Modules/country';
     styles: ``
 })
 export class Solution5Component implements OnInit {
-  title = '5- Pipe + Ng2SearchPipeModule dependency  + Reactive form (formControlName)';
+  title = '5- Ng2SearchPipeModule Pipe  + Reactive form (formControlName)';
   searchFilter: string = '';
   countryService = inject(CountryService);
   

@@ -18,15 +18,14 @@ import { CommonModule } from '@angular/common';
             type="text"
             class="form-control"
             autocomplete="on" 
-            placeholder="Search using Subject" />
+            placeholder="{{ title }}" />
 
             <div class="loader" [ngClass]="{ 'show': isLoading }">
               <div class="animation-loader"></div>
             </div>
 
             <!-- <pre>{{ countries$ | async | json }}</pre> -->
-            <ul class="list-group">
-    
+            <ul>
                 @for(country of countries$ | async; track country.idd) {
                   <li class="list-group-item list-group-item-action">
                   <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
