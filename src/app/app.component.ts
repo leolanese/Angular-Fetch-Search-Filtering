@@ -18,9 +18,9 @@ import { Solution5Component } from "./Components/solution5/solution5.component";
     template: `
       <h1>{{ title }}</h1>
 
-      <!-- <app-solution1></app-solution1>
+      <app-solution1></app-solution1>
       <app-solution2></app-solution2>
-      <app-solution3></app-solution3>  -->
+      <app-solution3></app-solution3> 
       <app-solution4></app-solution4>
       <app-solution5></app-solution5>
     `,

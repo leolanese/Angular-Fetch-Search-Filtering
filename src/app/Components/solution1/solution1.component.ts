@@ -13,24 +13,27 @@ import { CommonModule } from '@angular/common';
     <h2>{{ title }}</h2>
     <div class="container">
         <input 
-          [(ngModel)]="searchText" 
+          [(ngModel)]="searchFilter" 
           (ngModelChange)="onSearch($event)"
           type="text"
           class="form-control"
           placeholder="{{ title }}" />
 
-        <ul *ngFor="let country of countries$ | async | filter: searchText">
-          <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
-          <div class="d-flex align-items-center ms-3">
-            <i class="fas fa-search me-2"></i>
-            <p class="country-name mb-0">{{ country.name.official }}</p>
-          </div>
+        <ul>
+          @for(country of countries$ | async | filter: searchFilter; track country.idd) {
+            <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
+            <div class="d-flex align-items-center ms-3">
+              <i class="fas fa-search me-2"></i>
+              <p class="country-name mb-0">{{ country.name.official }}</p>
+            </div>
+          }
+
         </ul>
     </div>`
 })
 export class Solution1Component {
   title = '1- Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
-  searchText = '';
+  searchFilter = '';
   countries$: Observable<Country[]> = of([]);
   private searchSubject = new Subject<string>();
 
