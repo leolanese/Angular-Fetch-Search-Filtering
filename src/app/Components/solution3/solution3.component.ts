@@ -49,7 +49,7 @@ export class Solution3Component {
 
   filterForm: FormGroup = new FormGroup({
     searchFilter: new FormControl<string>('')
-});
+  });
 
   ngOnInit() {
     this.searchFilter$ = this.searchFilterFormControl.valueChanges.pipe(startWith(''));
