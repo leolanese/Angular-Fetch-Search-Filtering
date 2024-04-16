@@ -15,7 +15,7 @@
 
 2) Template reference variable (#) + event-binding()
 
-3) Angular Reactive forms (formGroup, formControl, formControlName) + .get()
+3) Pipe + Angular Reactive forms (formGroup, formControl, formControlName) + .get()
 
 4) Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges
 

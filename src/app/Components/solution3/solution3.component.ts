@@ -37,7 +37,7 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
 })
 
 export class Solution3Component {
-  title = '3- Angular Reactive forms (formGroup, formControl, formControlName) + .get()'
+  title = '3- Pipe + Angular Reactive forms (formGroup, formControl, formControlName) + .get()'
 
   searchFilterFormControl: FormControl = new FormControl('');
   searchFilter$!: Observable<string>;
