@@ -22,18 +22,18 @@ import { CountryService } from '../../Services/country.service';
   template: `
     <h2>{{ title }}</h2>
     <div class="container">
-    <form [formGroup]="filterForm">
+    <form [formGroup]="profileForm">
         <input 
-          formControlName="searchFilter"
-          class="form-control" 
-          type="text" 
-          name="search" 
-          autocomplete="on" 
-          placeholder="{{ title }}"
-          aria-label="search" />
+            formControlName="inputSearch"
+            class="form-control" 
+            type="text" 
+            name="search" 
+            autocomplete="on" 
+            placeholder="{{ title }}"
+            aria-label="search" />
 
         <ul>
-          @for(country of countries$ | async | filter:filterForm.get('searchFilter')?.value; track country.idd){
+          @for(country of countries$ | async ; track country.idd){
             <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
             <div class="d-flex align-items-center ms-3">
               <i class="fas fa-search me-2"></i>
@@ -50,17 +50,14 @@ import { CountryService } from '../../Services/country.service';
 export class Solution6Component {
   title = '6- Signal + Angular Reactive forms (formControlName)';
   countries$: Observable<Country[]> = of([]);
+  searchFilter: string = '';
   searchFilterFormControl: FormControl = new FormControl('');
   countryService = inject(CountryService);
-  searchFilter$!: Observable<string>;
+  searchFilter$!: Observable<string> 
 
   profileForm!: FormGroup;
 
   firstNameSignal: Signal<any>
-
-  filterForm: FormGroup = new FormGroup({
-    searchFilter: new FormControl<string>('')
-  });
 
  
   constructor(private fb: FormBuilder) {
@@ -73,6 +70,7 @@ export class Solution6Component {
         ?? of(null),
       {}
     );
+  
   }
 
   ngOnInit() {
@@ -84,4 +82,5 @@ export class Solution6Component {
       switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
     )
   }
+  
 }
