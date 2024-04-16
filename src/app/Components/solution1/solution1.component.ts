@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     </div>`
 })
 export class Solution1Component {
-  title = '1- Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
+  title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding';
   searchFilterModel = '';
   countries$: Observable<Country[]> = of([]);
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap, takeUntil } from 'rxjs';
 import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
 import { CountryService } from '../../Services/country.service';
 import { Country } from '../../Modules/country';
@@ -20,8 +20,6 @@ import { Country } from '../../Modules/country';
           <form [formGroup]="filterForm">
               <input 
                 formControlName="searchFilter"     
-                [formControl]="searchFilterFormControl" 
-
                 class="form-control" 
                 type="text" 
                 name="search" 
@@ -47,7 +45,7 @@ import { Country } from '../../Modules/country';
 export class Solution5Component implements OnInit {
   title = '5- Ng2SearchPipeModule Pipe  + Reactive form (formControlName)';
   searchFilter: string = '';
-  
+
   countryService = inject(CountryService);
 
   countries$: Observable<Country[]> = of([]);
@@ -62,18 +60,16 @@ export class Solution5Component implements OnInit {
   });
 
   ngOnInit() {
-    this.filterFormSubscription = this.filterForm.get('searchFilter')?.valueChanges.pipe(
+    this.countries$ = this.filterForm.get('searchFilter')?.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged(),
       switchMap((searchTerm) => {
         return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => of(countries)),
+          map(countries => countries || []),
+          takeUntil(this.destroy$)
         );
       })
-    ).subscribe((filteredData) => {
-      this.countries$ = of(filteredData);
-    });
-    
+    ) || of([]);
   }
 
   ngOnDestroy() {

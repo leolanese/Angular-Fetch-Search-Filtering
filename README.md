@@ -10,18 +10,18 @@
 
 ## Different solutions to filter data based on search input
 
-1) Pipe + ngModel + ngModelOnChange() subcription + 2-way-binding[()]
+1) Pipe + ngModel, ngModelOnChange + 2-way-binding
 
 2) Template reference variable (#) + event-binding()
 
-3) RxJs operators + Reactive forms (formControl)
+3) valueChanges + Angular Reactive forms (FormControl)
 
-4) Pipe + Angular Material + + Reactive forms (FormGroup, formControlName)
+4) Pipe + Angular Material + Reactive forms (FormGroup, formControlName)
 We'll be subscribing to two observables:
 - The `filterForm.get('searchFilter')?.valueChanges` subscription from the searchFilter form control
 - The Observable returned from the HTTP request to the API endpoint
 
-5) Pipe + Ng2SearchPipeModule dependency + 2-way-binding[()]
+5) Ng2SearchPipeModule Pipe + Reactive form (formControlName)
 
 ---
 
