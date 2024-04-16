@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
 import { CountryService } from '../../Services/country.service';
 import { Country } from '../../Modules/country';
@@ -20,6 +20,8 @@ import { Country } from '../../Modules/country';
           <form [formGroup]="filterForm">
               <input 
                 formControlName="searchFilter"     
+                [formControl]="searchFilterFormControl" 
+
                 class="form-control" 
                 type="text" 
                 name="search" 
@@ -45,11 +47,15 @@ import { Country } from '../../Modules/country';
 export class Solution5Component implements OnInit {
   title = '5- Ng2SearchPipeModule Pipe  + Reactive form (formControlName)';
   searchFilter: string = '';
+  
   countryService = inject(CountryService);
 
   countries$: Observable<Country[]> = of([]);
 
   filterFormSubscription?: Subscription = new Subscription(); 
+  searchFilterFormControl: FormControl = new FormControl('');
+
+  private destroy$ = new Subject<void>();
 
   filterForm: FormGroup = new FormGroup({
     searchFilter: new FormControl<string>('')
@@ -67,9 +73,12 @@ export class Solution5Component implements OnInit {
     ).subscribe((filteredData) => {
       this.countries$ = of(filteredData);
     });
+    
   }
 
-  ngOnDestroy(): void {
-    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
+  ngOnDestroy() {
+    this.destroy$.next(); // Emit a value to signal completion
+    this.destroy$.complete();
   }
+
 }

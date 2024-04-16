@@ -15,14 +15,14 @@ import { CommonModule } from '@angular/common';
     <h2>{{ title }}</h2>
     <div class="container">
         <input 
-          [(ngModel)]="searchFilter" 
+          [(ngModel)]="searchFilterModel" 
           (ngModelChange)="onSearch($event)"
           type="text"
           class="form-control"
           placeholder="{{ title }}" />
 
         <ul>
-          @for(country of countries$ | async | filter:searchFilter; track country.idd) {
+          @for(country of countries$ | async | filter:searchFilterModel; track country.idd) {
             <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
             <div class="d-flex align-items-center ms-3">
               <i class="fas fa-search me-2"></i>
@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Solution1Component {
   title = '1- Pipe, template with ngModel, ngModelOnChange, 2-way-binding';
-  searchFilter = '';
+  searchFilterModel = '';
   countries$: Observable<Country[]> = of([]);
 
   private searchSubject = new Subject<string>();

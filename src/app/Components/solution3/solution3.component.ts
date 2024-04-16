@@ -14,7 +14,7 @@ import { Country } from '../../Modules/country';
    <h2>{{ title }}</h2> 
    <div class="container">
       <input 
-        [formControl]="searchFilter" 
+        [formControl]="searchFilterFormControl" 
         type="text"
         class="form-control"
         autocomplete="on" 
@@ -34,27 +34,24 @@ import { Country } from '../../Modules/country';
 export class Solution3Component {
   title = '3- valueChanges + Angular Reactive forms (FormControl)'
 
-  searchFilter: FormControl = new FormControl('');
+  searchFilterFormControl: FormControl = new FormControl('');
+  searchFilter$!: Observable<string>;
 
   countries$: Observable<Country[]> = of([]);
-  searchFilter$!: Observable<string>;
   private destroy$ = new Subject<void>();
   
   countryService = inject(CountryService);
 
   ngOnInit() {
-    this.searchFilter$ = this.searchFilter.valueChanges.pipe(startWith(''));
+    this.searchFilter$ = this.searchFilterFormControl.valueChanges.pipe(startWith(''));
 
     this.countries$ = this.searchFilter$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(searchTerm => {
-        return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => of(countries))
-        );
-      }),
-      takeUntil(this.destroy$)
-    );
+      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
+        takeUntil(this.destroy$)
+      ))
+    )
   }
 
   ngOnDestroy() {
