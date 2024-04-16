@@ -57,7 +57,7 @@ import { CountryService } from '../../Services/country.service';
   `]
 })
 export class Solution4Component implements OnInit, OnDestroy  {
-  title = '4- Pipe + Angular Material + Reactive forms (FormGroup, formControlName)';
+  title = '4- Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges';
   countries$!: Observable<any[]> | undefined;
   searchFilter: string = '';
   filterFormSubscription?: Subscription = new Subscription(); 

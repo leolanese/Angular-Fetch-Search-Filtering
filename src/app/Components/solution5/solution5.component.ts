@@ -43,7 +43,7 @@ import { Country } from '../../Modules/country';
     styles: ``
 })
 export class Solution5Component implements OnInit {
-  title = '5- Ng2SearchPipeModule Pipe  + Reactive form (formControlName)';
+  title = '5- Ng2SearchPipeModule Pipe + Reactive form (formControlName)';
   searchFilter: string = '';
 
   countryService = inject(CountryService);

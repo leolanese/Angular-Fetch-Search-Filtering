@@ -2,21 +2,21 @@
 
 ## Angular fetch On Data From API. Using stand-alone Components, Observables and Subject strategies
 
-### Goal Keys 
+### Goal Keys
 
-- Subscribe to form input value changes
-- Subcribe to API call
+- Subscribe to Reactive forms input value changes 
+- Subscribe to API payload changes
 - Show Filter data based on search input term
 
 ## Different solutions to filter data based on search input
 
-1) Pipe + ngModel, ngModelOnChange + 2-way-binding
+1) Pipe + ngModel, ngModelOnChange + 2-way-binding[()]
 
 2) Template reference variable (#) + event-binding()
 
-3) valueChanges + Angular Reactive forms (FormControl)
+3) Reactive forms (FormControl) + valueChanges
 
-4) Pipe + Angular Material + Reactive forms (FormGroup, formControlName)
+4) Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges
 
 5) Ng2SearchPipeModule Pipe + Reactive form (formControlName)
 
