@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, Subscription } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, Subscription, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { CommonModule } from '@angular/common';
@@ -38,34 +38,29 @@ import { CommonModule } from '@angular/common';
 })
 export class Solution2Component {
   title = '2- Template reference variable (#), event-binding()';
-  searchText = '';
 
   countryService = inject(CountryService);
   
   countries$: Observable<Country[]> = of([]);
+  private destroy$ = new Subject<void>();
   private searchSubject = new Subject<string>();
-  private filterFormSubscription!: Subscription;
   
   onSearch(term: string) {
     this.searchSubject.next(term);
   }
 
-  ngOnInit() {
-    this.filterFormSubscription = this.searchSubject.pipe(
+  ngOnInit(): void {
+    this.countries$ = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(searchTerm => 
-          this.countryService.searchCountries(searchTerm).pipe(
-            switchMap(countries => of(countries))
-          )
-      )
-    ).subscribe(filteredData => {
-      this.countries$ = of(filteredData);
-    });
+      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
+        takeUntil(this.destroy$)
+      ))
+    )
   }
-
   ngOnDestroy(): void {
-    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

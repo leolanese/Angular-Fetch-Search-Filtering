@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, Subscription, takeUntil } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { FilterPipe } from '../../Pipes/filter.pipe';
@@ -38,7 +38,6 @@ export class Solution1Component {
   countries$: Observable<Country[]> = of([]);
 
   private searchSubject = new Subject<string>();
-  private filterFormSubscription!: Subscription;
   private destroy$ = new Subject<void>();
 
   countryService = inject(CountryService);
@@ -51,15 +50,13 @@ export class Solution1Component {
    * to perform a search (for countries) based on the search term entered by the user
    */
   ngOnInit(): void {
-   this.filterFormSubscription = this.searchSubject.pipe(
+    this.countries$ = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
         takeUntil(this.destroy$)
       ))
-    ).subscribe((filteredData: Country[]) => {
-      this.countries$ = of(filteredData)
-    });
+    )
   }
 
   ngOnDestroy(): void {

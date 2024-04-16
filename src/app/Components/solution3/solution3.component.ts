@@ -34,7 +34,8 @@ import { Country } from '../../Modules/country';
 export class Solution3Component {
   title = '3- valueChanges + Angular Reactive forms (FormControl)'
 
-  searchFilter!: FormControl;
+  searchFilter: FormControl = new FormControl('');
+
   countries$: Observable<Country[]> = of([]);
   searchFilter$!: Observable<string>;
   private destroy$ = new Subject<void>();
@@ -42,7 +43,6 @@ export class Solution3Component {
   countryService = inject(CountryService);
 
   ngOnInit() {
-    this.searchFilter = new FormControl('');
     this.searchFilter$ = this.searchFilter.valueChanges.pipe(startWith(''));
 
     this.countries$ = this.searchFilter$.pipe(
