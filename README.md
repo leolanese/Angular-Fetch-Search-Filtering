@@ -4,9 +4,10 @@
 
 ### Goal Keys
 
-- Subscribe to Reactive forms input value changes 
+- Reactive forms input value changes
 - Subscribe to API payload changes
 - Show Filter data based on search input term
+- Filtering: The end-point is already filtering depending on the user-input, but including the filter pipe in our template (countries$ | async | filter:searchFilter), Angular will apply the FilterPipe's transform method to the countries$ observable's emitted values. This means, that each time the countries$ observable emits a new array of countries, Angular will filter those (can be multiple) countries based on the searchFilter string using the logic defined in the FilterPipe.
 
 ## Different solutions to filter data based on search input
 
@@ -14,7 +15,7 @@
 
 2) Template reference variable (#) + event-binding()
 
-3) Reactive forms (FormControl) + valueChanges
+3) Angular Reactive forms (formGroup, formControl, formControlName) + .get()
 
 4) Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges
 

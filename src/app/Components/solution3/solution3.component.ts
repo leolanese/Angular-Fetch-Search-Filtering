@@ -1,26 +1,31 @@
 import { Component, inject } from '@angular/core';
 import { CountryService } from '../../Services/country.service';
 import { Observable, Subject, debounceTime, distinctUntilChanged, of, startWith, switchMap, takeUntil } from 'rxjs';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Country } from '../../Modules/country';
+import { FilterPipe } from '../../Pipes/filter.pipe';
 
 @Component({
   selector: 'app-solution3',
   standalone: true,
   imports: [CommonModule, 
+            FilterPipe,
             FormsModule, ReactiveFormsModule],
   template: `
    <h2>{{ title }}</h2> 
    <div class="container">
+   <form [formGroup]="filterForm">
       <input 
         [formControl]="searchFilterFormControl" 
+        formControlName="searchFilter" 
         type="text"
         class="form-control"
         autocomplete="on" 
         placeholder="{{ title }}" />
+  </form>
      
-      <ul *ngFor="let country of countries$ | async">
+      <ul *ngFor="let country of countries$ | async | filter:filterForm.get('searchFilter')?.value">
         <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
         <div class="d-flex align-items-center ms-3">
           <i class="fas fa-search me-2"></i>
@@ -32,7 +37,7 @@ import { Country } from '../../Modules/country';
 })
 
 export class Solution3Component {
-  title = '3- valueChanges + Angular Reactive forms (FormControl)'
+  title = '3- Angular Reactive forms (formGroup, formControl, formControlName) + .get()'
 
   searchFilterFormControl: FormControl = new FormControl('');
   searchFilter$!: Observable<string>;
@@ -41,6 +46,10 @@ export class Solution3Component {
   private destroy$ = new Subject<void>();
   
   countryService = inject(CountryService);
+
+  filterForm: FormGroup = new FormGroup({
+    searchFilter: new FormControl<string>('')
+});
 
   ngOnInit() {
     this.searchFilter$ = this.searchFilterFormControl.valueChanges.pipe(startWith(''));

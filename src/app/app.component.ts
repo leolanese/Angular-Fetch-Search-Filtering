@@ -12,6 +12,7 @@ import { Solution2Component } from './Components/solution2/solution2.component';
 import { Solution3Component } from './Components/solution3/solution3.component';
 import { Solution4Component } from "./Components/solution4/solution4.component";
 import { Solution5Component } from "./Components/solution5/solution5.component";
+import { Solution6Component } from './Components/solution6/solution6.component';
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -23,6 +24,7 @@ import { Solution5Component } from "./Components/solution5/solution5.component";
       <app-solution3></app-solution3> 
       <app-solution4></app-solution4>
       <app-solution5></app-solution5>
+      <app-solution6></app-solution6>
     `,
     imports: [
         RouterOutlet, HttpClientModule, CommonModule,
@@ -30,10 +32,11 @@ import { Solution5Component } from "./Components/solution5/solution5.component";
         Solution2Component,
         Solution3Component,
         Solution4Component,
-        Solution5Component
+        Solution5Component,
+        Solution6Component
     ]
 })
 export class AppComponent {
-  title = 'Angular searchs playground area';
+  title = 'Angular search and filters playground area';
 }
 
