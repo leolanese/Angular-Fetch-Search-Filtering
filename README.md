@@ -17,9 +17,6 @@
 3) valueChanges + Angular Reactive forms (FormControl)
 
 4) Pipe + Angular Material + Reactive forms (FormGroup, formControlName)
-We'll be subscribing to two observables:
-- The `filterForm.get('searchFilter')?.valueChanges` subscription from the searchFilter form control
-- The Observable returned from the HTTP request to the API endpoint
 
 5) Ng2SearchPipeModule Pipe + Reactive form (formControlName)
 
