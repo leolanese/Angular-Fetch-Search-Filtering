@@ -43,7 +43,7 @@ import { CountryService } from '../../Services/country.service';
   `,
 })
 export class Solution6Component {
-  title = '6- Signal + Angular Reactive forms (formControlName)';
+  title = '6- Pipe + Signal + Angular Reactive forms: formGroup, formControlName';
   countries$: Observable<Country[]> = of([]);
   searchFilter: string = '';
 
