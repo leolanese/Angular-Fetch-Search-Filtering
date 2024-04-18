@@ -17,7 +17,7 @@
 
 3) Pipe + Angular Reactive forms: formGroup, formControl (directly binding the FormControl instance)
 
-4) Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges
+4) Pipe + Material + Reactive forms: FormGroup, formControlName (directly bind to specific input element within the template) + .get()
 
 5) Ng2SearchPipeModule Pipe + Reactive form (formControlName)
 

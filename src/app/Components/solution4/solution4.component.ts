@@ -28,7 +28,7 @@ import { CountryService } from '../../Services/country.service';
       </form>
 
       <ng-container> 
-         @for(country of countries$ | async | filter:searchFilter | slice:0:5; track country.idd) {
+         @for(country of countries$ | async | filter: filterForm.get('searchFilter')?.value | slice:0:5; track country.idd) {
            <div class="todo-item">
               <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
               <div class="d-flex align-items-center ms-3">
@@ -57,9 +57,8 @@ import { CountryService } from '../../Services/country.service';
   `]
 })
 export class Solution4Component implements OnInit, OnDestroy  {
-  title = '4- Pipe + Material + Reactive forms (FormGroup, formControlName) + valueChanges';
+  title = '4- Pipe + Material + Reactive forms: FormGroup, formControlName (directly bind to specific input element within the template) + .get()';
   countries$!: Observable<any[]> | undefined;
-  searchFilter: string = '';
   filterFormSubscription?: Subscription = new Subscription(); 
 
   countryService = inject(CountryService);
@@ -74,9 +73,7 @@ export class Solution4Component implements OnInit, OnDestroy  {
       debounceTime(400),
       distinctUntilChanged(),
       switchMap((searchTerm) => {
-        return this.countryService.searchCountries(searchTerm).pipe(
-          switchMap(countries => of(countries))
-        );
+        return this.countryService.searchCountries(searchTerm);
       })
     ).subscribe((filteredData) => {
       this.countries$ = of(filteredData);
@@ -84,7 +81,7 @@ export class Solution4Component implements OnInit, OnDestroy  {
   }
 
   ngOnDestroy(): void {
-    !!this.filterFormSubscription &&  this.filterFormSubscription.unsubscribe();
+    this.filterFormSubscription?.unsubscribe();
   }
 
 }

@@ -15,14 +15,14 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   template: `
    <h2>{{ title }}</h2> 
    <div class="container">
-   <form [formGroup]="filterForm">
-      <input 
-        [formControl]="searchFilterFormControl" 
-        type="text"
-        class="form-control"
-        autocomplete="on" 
-        placeholder="{{ title }}" />
-   </form>
+      <form [formGroup]="filterForm">
+          <input 
+            [formControl]="searchFilterFormControl" 
+            type="text"
+            class="form-control"
+            autocomplete="on" 
+            placeholder="{{ title }}" />
+      </form>
      
       <ul *ngFor="let country of countries$ | async | filter:searchFilterFormControl.value">
         <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
