@@ -63,7 +63,7 @@ export class Solution4Component implements OnInit, OnDestroy  {
 
   countryService = inject(CountryService);
   
-  // Connect filter form value changes to searchFilter
+  // Direct Instantiation Approach: Connect filter form value changes to searchFilter
   filterForm: FormGroup = new FormGroup({
       searchFilter: new FormControl<string>('')
   });
