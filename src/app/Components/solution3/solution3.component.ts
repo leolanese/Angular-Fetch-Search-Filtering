@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CountryService } from '../../Services/country.service';
 import { Observable, Subject, debounceTime, distinctUntilChanged, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,14 +18,13 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
    <form [formGroup]="filterForm">
       <input 
         [formControl]="searchFilterFormControl" 
-        formControlName="searchFilter" 
         type="text"
         class="form-control"
         autocomplete="on" 
         placeholder="{{ title }}" />
-  </form>
+   </form>
      
-      <ul *ngFor="let country of countries$ | async | filter:filterForm.get('searchFilter')?.value">
+      <ul *ngFor="let country of countries$ | async | filter:searchFilterFormControl.value">
         <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
         <div class="d-flex align-items-center ms-3">
           <i class="fas fa-search me-2"></i>
@@ -36,8 +35,8 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   `
 })
 
-export class Solution3Component {
-  title = '3- Pipe + Angular Reactive forms (formGroup, formControl, formControlName) + .get()'
+export class Solution3Component implements OnDestroy {
+  title = '3- Pipe + Angular Reactive forms: formGroup, formControl (directly binding the FormControl instance)'
 
   searchFilterFormControl: FormControl = new FormControl('');
   searchFilter$!: Observable<string>;

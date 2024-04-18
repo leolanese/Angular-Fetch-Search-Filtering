@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, Subscription, takeUntil } from 'rxjs';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { CommonModule } from '@angular/common';
@@ -38,7 +38,7 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
       </form>
   </div>`
 })
-export class Solution2Component {
+export class Solution2Component implements OnInit, OnDestroy {
   title = '2- Pipe + Template reference variable (#), event-binding() + + searchSubject';
   searchText: string = '';
 
