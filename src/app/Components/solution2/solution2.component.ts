@@ -39,7 +39,7 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   </div>`
 })
 export class Solution2Component {
-  title = '2- filter + Template reference variable (#), event-binding() + + searchSubject';
+  title = '2- Pipe + Template reference variable (#), event-binding() + + searchSubject';
   searchText: string = '';
 
   countryService = inject(CountryService);
