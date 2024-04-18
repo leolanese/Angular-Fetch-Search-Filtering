@@ -3,11 +3,13 @@ import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap,
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../Services/country.service';
 import { CommonModule } from '@angular/common';
+import { FilterPipe } from '../../Pipes/filter.pipe';
 
 @Component({
   selector: 'app-solution2',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+            FilterPipe],
   template: `
     <h2>{{ title }}</h2>
     <div class="container">
@@ -22,7 +24,7 @@ import { CommonModule } from '@angular/common';
 
             <!-- <pre>{{ countries$ | async | json }}</pre> -->
             <ul>
-                @for(country of countries$ | async; track country.idd) {
+                @for(country of countries$ | async| filter: searchText; track country.idd) {
                   <li class="list-group-item list-group-item-action">
                   <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
                     <div class="d-flex align-items-center ms-3">
@@ -37,15 +39,17 @@ import { CommonModule } from '@angular/common';
   </div>`
 })
 export class Solution2Component {
-  title = '2- Template reference variable (#), event-binding()';
+  title = '2- filter + Template reference variable (#), event-binding() + + searchSubject';
+  searchText: string = '';
 
   countryService = inject(CountryService);
   
   countries$: Observable<Country[]> = of([]);
   private destroy$ = new Subject<void>();
   private searchSubject = new Subject<string>();
-  
+
   onSearch(term: string) {
+    this.searchText = term;
     this.searchSubject.next(term);
   }
 

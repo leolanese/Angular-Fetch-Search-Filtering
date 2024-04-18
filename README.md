@@ -13,7 +13,7 @@
 
 1) Pipe + ngModel, ngModelOnChange + 2-way-binding[()]
 
-2) Template reference variable (#) + event-binding()
+2) Pipe + Template reference variable (#), event-binding() + + searchSubject
 
 3) Pipe + Angular Reactive forms (formGroup, formControl, formControlName) + .get()
 
