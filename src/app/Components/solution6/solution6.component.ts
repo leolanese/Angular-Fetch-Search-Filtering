@@ -36,8 +36,8 @@ import { CountryService } from '../../Services/country.service';
             </div>
           }
         </ul> 
-      </form>
-
+    </form>
+    
     <!-- <div *ngIf="countryNameSignal()">{{ countryNameSignal() }}</div> -->
     </div>
   `,

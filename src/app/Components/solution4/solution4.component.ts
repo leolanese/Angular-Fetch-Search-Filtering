@@ -6,6 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { CountryService } from '../../Services/country.service';
 
+interface Country {
+  searchFilter: FormControl<string>;
+}
+
 @Component({
   selector: 'app-solution4',
   standalone: true,
@@ -64,8 +68,8 @@ export class Solution4Component implements OnInit, OnDestroy  {
   countryService = inject(CountryService);
   
   // Direct Instantiation Approach: Connect filter form value changes to searchFilter
-  filterForm: FormGroup = new FormGroup({
-      searchFilter: new FormControl<string>('')
+  filterForm: FormGroup = new FormGroup<Country>({
+      searchFilter: new FormControl<string>('', { nonNullable: true })
   });
      
   ngOnInit() {

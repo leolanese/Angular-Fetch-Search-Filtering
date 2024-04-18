@@ -47,7 +47,7 @@ export class Solution3Component implements OnDestroy {
   countryService = inject(CountryService);
 
   filterForm: FormGroup = new FormGroup({
-    searchFilter: new FormControl<string>('')
+    searchFilter: new FormControl<string>('', { nonNullable: true })
   });
 
   ngOnInit() {
