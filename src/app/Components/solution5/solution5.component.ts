@@ -70,7 +70,7 @@ export class Solution5Component implements OnInit {
   }
 
   ngOnDestroy() {
-    this.destroy$.next(); // Emit a value to signal completion
+    this.destroy$.next(); // Emit value signal completion
     this.destroy$.complete();
   }
 

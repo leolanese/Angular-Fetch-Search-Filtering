@@ -39,7 +39,7 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   </div>`
 })
 export class Solution2Component implements OnInit, OnDestroy {
-  title = '2- Pipe + Template reference variable (#), event-binding() + + searchSubject';
+  title = '2- Pipe + Template reference variable (#), event-binding() + searchSubject';
   searchText: string = '';
 
   countryService = inject(CountryService);
