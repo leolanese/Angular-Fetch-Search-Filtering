@@ -29,7 +29,7 @@ import { Country } from '../../Modules/country';
           </form>
 
           <ul>
-            @for(country of countries$ | async | filter:searchFilter; track country.idd){
+            @for(country of countries$ | async | filter:filterForm.get('searchFilter')?.value ; track country.idd){
               <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
               <div class="d-flex align-items-center ms-3">
                 <i class="fas fa-search me-2"></i>
@@ -49,9 +49,6 @@ export class Solution5Component implements OnInit {
   countryService = inject(CountryService);
 
   countries$: Observable<Country[]> = of([]);
-
-  filterFormSubscription?: Subscription = new Subscription(); 
-  searchFilterFormControl: FormControl = new FormControl('');
 
   private destroy$ = new Subject<void>();
 

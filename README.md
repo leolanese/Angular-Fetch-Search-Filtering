@@ -2,6 +2,8 @@
 
 ## Angular fetch On Data From API. Using stand-alone Components, Observables and Subject strategies
 
+- We are going to follow the `reactive forms` input value changes to fetch data from API. Using a `pipe to filter` data based on search input term: The Filter will filter the `payload from API end-point`.
+
 ### Goal Keys
 
 - Reactive forms input value changes
