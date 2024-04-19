@@ -25,6 +25,8 @@
 
 6) Pipe + Signal + Angular Reactive forms: formGroup, formControlName
 
+7) Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName
+
 ---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17+

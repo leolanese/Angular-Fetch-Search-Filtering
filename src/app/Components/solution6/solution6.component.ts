@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal, inject } from '@angular/core';
+import { Component, Signal, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
@@ -28,7 +28,7 @@ import { CountryService } from '../../Services/country.service';
               aria-label="search" />
 
         <ul>
-          @for(country of countries$ | async | filter: countryNameSignal() ; track country.idd){
+          @for(country of countries$ | async | filter: countrySearchNameSignal() ; track country.idd){
             <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
             <div class="d-flex align-items-center ms-3">
               <i class="fas fa-search me-2"></i>
@@ -36,9 +36,8 @@ import { CountryService } from '../../Services/country.service';
             </div>
           }
         </ul> 
-    </form>
-    
-    <!-- <div *ngIf="countryNameSignal()">{{ countryNameSignal() }}</div> -->
+     </form>
+
     </div>
   `,
 })
@@ -53,26 +52,31 @@ export class Solution6Component {
 
   filterForm: FormGroup;
 
-  countryNameSignal: Signal<any>;
+  countrySearchNameSignal: Signal<any>;
 
    constructor() {
     this.filterForm = new FormGroup({
       inputSearch: new FormControl('')
     });
   
-    this.countryNameSignal = toSignal(
+    this.countrySearchNameSignal = toSignal(
       this.filterForm.get('inputSearch')?.valueChanges.pipe(debounceTime(300)) 
         ?? of(null),
       {}
     );
-  
+
   }
+
+  initialiseSearch = effect(() => {
+      console.log(`Signal (toSignal): ${JSON.stringify(this.countrySearchNameSignal())}`);
+  });
+    
 
   ngOnInit() {
     this.searchFilter$ =  this.filterForm.get('inputSearch')?.valueChanges.pipe(startWith('')) || of('');
    
     this.countries$ = this.searchFilter$.pipe(
-      debounceTime(400),
+      debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
     )
