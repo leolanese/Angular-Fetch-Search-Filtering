@@ -99,13 +99,13 @@ export class Solution7Component implements OnInit {
       switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
     )
 
-    this.signalA.set('A2');
-    this.signalB.set('B2');
+    this.signalA.set('A2'); // ignored
+    this.signalB.set('B2'); // ignored
 
-    this.signalA.set('A3');
-    this.signalB.set('B3');
+    this.signalA.set('A3'); // ignored
+    this.signalB.set('B3'); // ignored
 
-    this.signalA.set('A4'); //
-    this.signalB.set('B4'); //
+    this.signalA.set('A4'); // stable values
+    this.signalB.set('B4'); // stable values 
   }
 }

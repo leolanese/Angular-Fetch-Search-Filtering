@@ -71,7 +71,6 @@ export class Solution6Component {
       console.log(`Signal (toSignal): ${JSON.stringify(this.countrySearchNameSignal())}`);
   });
     
-
   ngOnInit() {
     this.searchFilter$ =  this.filterForm.get('inputSearch')?.valueChanges.pipe(startWith('')) || of('');
    
