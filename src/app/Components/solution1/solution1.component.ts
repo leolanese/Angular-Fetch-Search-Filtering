@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
             FilterPipe, 
             FormsModule],
   template: `
-    <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
     <div class="container">
         <input 
           [(ngModel)]="searchFilterModel" 

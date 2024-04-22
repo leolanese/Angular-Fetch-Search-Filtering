@@ -11,8 +11,9 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   imports: [CommonModule,
             FilterPipe],
   template: `
-    <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
     <div class="container">
+      
       <form>
           <input
             #searchBox

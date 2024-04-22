@@ -13,7 +13,8 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
             FilterPipe,
             FormsModule, ReactiveFormsModule],
   template: `
-   <h2>{{ title }}</h2> 
+   <h3>{{ title }}</h3>
+
    <div class="container">
       <form [formGroup]="filterForm">
           <input 

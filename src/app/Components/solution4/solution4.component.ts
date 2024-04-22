@@ -17,7 +17,7 @@ interface Country {
             FormsModule, ReactiveFormsModule,
             MatInputModule],
   template: `
-     <h2>{{ title }}</h2>
+     <h3>{{ title }}</h3>
 
      <div class="container">
       <!-- binds the <form> element to a FormGroup instance called filterForm -->

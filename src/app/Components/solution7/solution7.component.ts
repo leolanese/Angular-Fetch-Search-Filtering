@@ -11,7 +11,7 @@ import { CountryService } from '../../Services/country.service';
     selector: 'app-solution7',
     standalone: true,
     template: `
-    <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
 
     <div class="container">
         <form [formGroup]="filterForm">
@@ -23,6 +23,7 @@ import { CountryService } from '../../Services/country.service';
               autocomplete="on" 
               placeholder="{{ title }}"
               aria-label="search" />
+
       <ul>
             @for(country of countries$ | async | filter: countrySearchNameSignal() ; track country.idd){
               <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />

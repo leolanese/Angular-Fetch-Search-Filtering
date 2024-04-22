@@ -13,7 +13,7 @@ import { Country } from '../../Modules/country';
             FormsModule, ReactiveFormsModule,
             Ng2SearchPipeModule],
     template: `
-     <h2>{{ title }}</h2>
+     <h3>{{ title }}</h3>
 
      <div class="container">
         <div class="row">

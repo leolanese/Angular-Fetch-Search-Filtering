@@ -14,7 +14,7 @@ import { CountryService } from '../../Services/country.service';
             ReactiveFormsModule, 
             FilterPipe],
   template: `
-    <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
     <div class="container">
 
       <form [formGroup]="filterForm">

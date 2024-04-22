@@ -12,7 +12,7 @@ import { OptionComponent } from "../solution8/option.component";
     selector: 'app-solution8',
     standalone: true,
     template: `
-    <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
 
     <div class="container">
         <form>
