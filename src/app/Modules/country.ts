@@ -37,6 +37,7 @@ export interface Country {
 }
 
 export interface Name {
+  [x: string]: any
   common: string
   official: string
   nativeName: NativeName
