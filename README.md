@@ -29,10 +29,10 @@
 
 8) Pipe + Signal + Template-Driven forms (NgForm) + onSearch event
 
-9) Pipe + Signal + 2-way-binding[()] + onSearch event 
+9) Pipe + Signal + 2-way-binding[()] + onSearch event
 
 10) rxjs + ReactiveFormsModule + formControlName (directly bind to specific input element within the template) + .valueChanges
-
+(based on https://github.com/leolanese/Angular-rxjs-filtering-list)
 
 ---
 
