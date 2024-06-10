@@ -27,6 +27,13 @@
 
 7) Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName
 
+8) Pipe + Signal + Template-Driven forms (NgForm) + onSearch event
+
+9) Pipe + Signal + 2-way-binding[()] + onSearch event 
+
+10) rxjs + ReactiveFormsModule + formControlName (directly bind to specific input element within the template) + .valueChanges
+
+
 ---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17+

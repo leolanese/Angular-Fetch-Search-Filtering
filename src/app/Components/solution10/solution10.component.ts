@@ -27,7 +27,7 @@ import { combineLatest} from "rxjs";
               ReactiveFormsModule ]
 })
 export class Solution10Component {
-  title = '10- ReactiveFormsModule + formControll';
+  title = '10- rxjs + ReactiveFormsModule + formControl';
   countries$: Observable<Country[]>;
 
   // Data describing 
