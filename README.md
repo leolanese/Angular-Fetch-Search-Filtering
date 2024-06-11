@@ -27,7 +27,7 @@
 
 7) Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName
 
-8) Pipe + Signal + Template-Driven forms (NgForm) + onSearch event
+8) Pipe + Signal + Template-Driven forms (NgForm) + onSearch event 
 
 9) Pipe + Signal + 2-way-binding[()] + onSearch event
 
@@ -60,6 +60,10 @@ ng g s services/country
 ng g p pipes/filter
 // reusable pipe to filter array based on search term
 ```
+
+## API Service
+
+We are using "https://restcountries.com" sometimes these services are not as fast as expected, I'm looking forward to replace it but for now it's good enough.
 
 ---
 

@@ -17,10 +17,22 @@ import { combineLatest} from "rxjs";
     <h3>{{ title }}</h3>
 
     <div class="container">
-      <input type="text" [formControl]="filter" placeholder="Filter states...">
-      <ul>
-        <li *ngFor="let country of filteredCountry$ | async">{{country.name}}</li>
-      </ul>
+      <form>
+        <input 
+          [formControl]="filter" 
+          
+          class="form-control" 
+          type="text" 
+          autocomplete="on" 
+          placeholder="{{ title }}"
+          aria-label="search" 
+          required />
+        <ul>
+          <ng-container *ngFor="let country of filteredCountry$ | async">
+             <li>{{ country.name }}</li>
+          </ng-container>
+        </ul>
+      </form>
     </div>
   `,
     imports: [CommonModule,
@@ -40,7 +52,10 @@ export class Solution10Component {
     this.countries$ = of(countries) as any;
 
     this.filter = new FormControl("");
-    this.filter$ = this.filter.valueChanges.pipe(startWith(""));
+    this.filter$ = this.filter.valueChanges.pipe(
+      startWith(""),
+      distinctUntilChanged()
+    );
 
     this.filteredCountry$ = combineLatest(this.countries$, this.filter$).pipe(
       debounceTime(500),
