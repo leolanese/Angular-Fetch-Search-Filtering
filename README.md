@@ -63,7 +63,7 @@ ng g p pipes/filter
 
 ## API Service
 
-We are using "https://restcountries.com" sometimes these services are not as fast as expected, I'm looking forward to replace (maybe with: https://countries.petethompson.net/data/countries.json) it but for now it's good enough.
+We are using "https://restcountries.com" sometimes these services are not as fast as expected, I'm looking forward to replace (maybe with: https://countries.petethompson.net) it but for now it's good enough.
 
 ---
 
