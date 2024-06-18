@@ -1,4 +1,4 @@
-import { Component, computed, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { OptionComponent } from "../solution8/option.component";
 import { countries } from "../../services/mocks/countries";
 import { map, startWith } from "rxjs/operators";
 import { combineLatest} from "rxjs";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-solution10',
@@ -44,6 +45,8 @@ export class Solution10Component {
 
   // Data describing 
   filteredCountry$: Observable<Country[]>;
+
+  private destroyRef = inject(DestroyRef);
   
   filter: FormControl;
   filter$: Observable<string>;
@@ -54,7 +57,8 @@ export class Solution10Component {
     this.filter = new FormControl("");
     this.filter$ = this.filter.valueChanges.pipe(
       startWith(""),
-      distinctUntilChanged()
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)
     );
 
     this.filteredCountry$ = combineLatest(this.countries$, this.filter$).pipe(
