@@ -47,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
               FormsModule, FilterPipe, OptionComponent]
 })
 export class Solution9Component {
-    title = '9- Pipe + Signal + 2-way-binding[()] + onSearch event';
+    title = '9- Pipe + Signal + 2-way-binding[()] + onSearch event + takeUntilDestroyed';
     countrySearchSignal = signal("");
 
     private countryService = inject(CountryService);

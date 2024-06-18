@@ -17,7 +17,7 @@ import { CountryService } from '../../services/country.service';
         <form [formGroup]="filterForm">
           <input 
               formControlName="inputSearch"
-              
+
               class="form-control" 
               type="text" 
               name="search" 
@@ -42,7 +42,7 @@ import { CountryService } from '../../services/country.service';
               FilterPipe]
 })
 export class Solution7Component implements OnInit {
-  title = '7- Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName';
+  title = '7- Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName + takeUntilDestroyed';
   countries$: Observable<Country[]> = of([]);
   searchFilter: string = '';
 

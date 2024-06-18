@@ -40,7 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
               ReactiveFormsModule ]
 })
 export class Solution10Component {
-  title = '10- rxjs + ReactiveFormsModule + formControl';
+  title = '10- rxjs + ReactiveFormsModule + formControl + takeUntilDestroyed';
   countries$: Observable<Country[]>;
 
   // Data describing 

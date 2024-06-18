@@ -46,8 +46,8 @@ import { OptionComponent } from "../solution8/option.component";
               ReactiveFormsModule,
               FormsModule, FilterPipe, OptionComponent]
 })
-export class Solution8Component implements OnInit {
-    title = '8- Pipe + Signal + Template-Driven forms (NgForm) + onSearch event';
+export class Solution8Component {
+    title = '8- Pipe + Signal + Template-Driven forms (NgForm) + onSearch event + takeUntilDestroyed';
     countries$: Observable<Country[]> = of([]);
     countrySearchSignal = signal("");
 
