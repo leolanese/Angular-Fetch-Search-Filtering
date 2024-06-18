@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 

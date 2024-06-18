@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 import { OptionComponent } from "../solution8/option.component";
 
 @Component({

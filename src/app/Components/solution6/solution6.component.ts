@@ -5,7 +5,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { Country } from '../../Modules/country';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 
 @Component({
   selector: 'app-solution6',

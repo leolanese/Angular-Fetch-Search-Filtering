@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 
 interface Country {
   searchFilter: FormControl<string>;

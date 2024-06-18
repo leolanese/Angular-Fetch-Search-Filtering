@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap, takeUntil } from 'rxjs';
 import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 import { Country } from '../../Modules/country';
 
 @Component({

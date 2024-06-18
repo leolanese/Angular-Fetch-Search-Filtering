@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 
 @Component({
     selector: 'app-solution7',

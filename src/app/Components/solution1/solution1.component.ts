@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
-import { CountryService } from '../../Services/country.service';
+import { CountryService } from '../../services/country.service';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-solution1',
   standalone: true,
@@ -53,15 +54,8 @@ export class Solution1Component {
     this.countries$ = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
-        takeUntil(this.destroy$)
-      ))
+      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(takeUntilDestroyed()))
     )
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
   
 }
