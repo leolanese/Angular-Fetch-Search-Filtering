@@ -1,4 +1,5 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject, DestroyRef } from '@angular/core';
 import { CountryService } from '../../services/country.service';
 import { Observable, Subject, debounceTime, distinctUntilChanged, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,16 +37,16 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
   `
 })
 
-export class Solution3Component implements OnDestroy {
-  title = '3- Pipe + Angular Reactive forms: formGroup, formControl (directly binding the FormControl instance)'
+export class Solution3Component {
+  title = '3- Pipe + Angular Reactive forms: formGroup, formControl (directly binding the FormControl instance) + takeUntilDestroyed()'
 
   searchFilterFormControl: FormControl = new FormControl('');
   searchFilter$!: Observable<string>;
 
   countries$: Observable<Country[]> = of([]);
-  private destroy$ = new Subject<void>();
-  
-  countryService = inject(CountryService);
+
+  private destroyRef = inject(DestroyRef)
+  private countryService = inject(CountryService);
 
   filterForm: FormGroup = new FormGroup({
     searchFilter: new FormControl<string>('', { nonNullable: true })
@@ -57,14 +58,11 @@ export class Solution3Component implements OnDestroy {
     this.countries$ = this.searchFilter$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
-        takeUntil(this.destroy$)
-      ))
+      switchMap(
+        (searchTerm: string) => this.countryService.searchCountries(searchTerm)
+      ),
+      takeUntilDestroyed(this.destroyRef)
     )
   }
 
-  ngOnDestroy() {
-    this.destroy$.next(); // Emit a value to signal completion
-    this.destroy$.complete();
-  }
 }

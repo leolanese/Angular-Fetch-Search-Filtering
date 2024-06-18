@@ -1,4 +1,4 @@
-import { Component, computed, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { CountryService } from '../../services/country.service';
 import { OptionComponent } from "../solution8/option.component";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-solution9',
@@ -49,7 +50,8 @@ export class Solution9Component {
     title = '9- Pipe + Signal + 2-way-binding[()] + onSearch event';
     countrySearchSignal = signal("");
 
-    countryService = inject(CountryService);
+    private countryService = inject(CountryService);
+    private destroyRef = inject(DestroyRef);
 
     countries$: Observable<Country[]> = of([]);
     searchFilter$!: Observable<string> 
@@ -58,7 +60,8 @@ export class Solution9Component {
       this.countries$ = of(this.countrySearchSignal()).pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
+        switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm)),
+        takeUntilDestroyed(this.destroyRef)
       )
 
       console.log("Search:", this.countrySearchSignal());

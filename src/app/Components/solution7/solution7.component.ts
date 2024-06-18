@@ -1,10 +1,10 @@
-import { Component, computed, effect, inject, input, OnInit, signal, Signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, input, OnInit, signal, Signal } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, of, startWith, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CountryService } from '../../services/country.service';
 
 @Component({
@@ -17,6 +17,7 @@ import { CountryService } from '../../services/country.service';
         <form [formGroup]="filterForm">
           <input 
               formControlName="inputSearch"
+              
               class="form-control" 
               type="text" 
               name="search" 
@@ -45,7 +46,8 @@ export class Solution7Component implements OnInit {
   countries$: Observable<Country[]> = of([]);
   searchFilter: string = '';
 
-  countryService = inject(CountryService);
+  private countryService = inject(CountryService);
+  private destroyRef = inject(DestroyRef)
 
   searchFilter$!: Observable<string> 
 
@@ -72,8 +74,9 @@ export class Solution7Component implements OnInit {
     this.countries$ = this.searchFilter$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
+      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm)),
+      takeUntilDestroyed(this.destroyRef)
     )
-
   }
+
 }

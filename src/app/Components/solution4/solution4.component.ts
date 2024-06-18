@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { CountryService } from '../../services/country.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface Country {
   searchFilter: FormControl<string>;
@@ -60,12 +61,13 @@ interface Country {
       }
   `]
 })
-export class Solution4Component implements OnInit, OnDestroy  {
-  title = '4- Pipe + Material + Reactive forms: FormGroup, formControlName (directly bind to specific input element within the template) + .get()';
+export class Solution4Component implements OnInit  {
+  title = '4- Pipe + Material + Reactive forms: FormGroup, formControlName (directly bind to specific input element within the template) + .get() + takeUntilDestroyed';
   countries$!: Observable<any[]> | undefined;
   filterFormSubscription?: Subscription = new Subscription(); 
 
   countryService = inject(CountryService);
+  private destroyRef = inject(DestroyRef);
   
   // Direct Instantiation Approach: Connect filter form value changes to searchFilter
   filterForm: FormGroup = new FormGroup<Country>({
@@ -78,14 +80,11 @@ export class Solution4Component implements OnInit, OnDestroy  {
       distinctUntilChanged(),
       switchMap((searchTerm) => {
         return this.countryService.searchCountries(searchTerm);
-      })
+      }),
+      takeUntilDestroyed(this.destroyRef),
     ).subscribe((filteredData) => {
       this.countries$ = of(filteredData);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.filterFormSubscription?.unsubscribe();
   }
 
 }

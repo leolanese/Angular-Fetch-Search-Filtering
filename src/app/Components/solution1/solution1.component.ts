@@ -34,26 +34,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     </div>`
 })
 export class Solution1Component implements OnInit {
-  title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding';
+  title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding + takeUntilDestroyed';
   searchFilterModel = '';
+
   countries$: Observable<Country[]> = of([]);
-
-  private searchSubject = new Subject<string>();
-  private destroy$ = new Subject<void>();
-
+  private searchSubject$ = new Subject<string>();
+  
   private destroyRef = inject(DestroyRef)
-
-  countryService = inject(CountryService);
+  private countryService = inject(CountryService);
   
   onSearch(term: string): void {
-    this.searchSubject.next(term);
+    this.searchSubject$.next(term);
   }
   /**
-   * Initialises the component and subscribes to the searchSubject observable 
+   * Initialises the component and subscribes to the searchSubject$ Subject  
    * to perform a search (for countries) based on the search term entered by the user
    */
   ngOnInit(): void {
-    this.countries$ = this.searchSubject.pipe(
+    this.countries$ = this.searchSubject$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => 

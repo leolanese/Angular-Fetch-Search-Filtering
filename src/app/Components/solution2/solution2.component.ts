@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../services/country.service';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from '../../Pipes/filter.pipe';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-solution2',
@@ -39,33 +40,30 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
       </form>
   </div>`
 })
-export class Solution2Component implements OnInit, OnDestroy {
-  title = '2- Pipe + Template reference variable (#), event-binding() + searchSubject';
+export class Solution2Component implements OnInit {
+  title = '2- Pipe + Template reference variable (#), event-binding() + searchSubject + takeUntilDestroyed';
   searchText: string = '';
 
-  countryService = inject(CountryService);
+  private countryService = inject(CountryService);
+  private destroyRef = inject(DestroyRef);
   
   countries$: Observable<Country[]> = of([]);
-  private destroy$ = new Subject<void>();
-  private searchSubject = new Subject<string>();
+  private searchSubject$ = new Subject<string>();
 
   onSearch(term: string) {
     this.searchText = term;
-    this.searchSubject.next(term);
+    this.searchSubject$.next(term);
   }
 
   ngOnInit(): void {
-    this.countries$ = this.searchSubject.pipe(
+    this.countries$ = this.searchSubject$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(
-        takeUntil(this.destroy$)
-      ))
+      switchMap((searchTerm: string) => 
+        this.countryService.searchCountries(searchTerm)
+      ),
+      takeUntilDestroyed(this.destroyRef) 
     )
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
 }

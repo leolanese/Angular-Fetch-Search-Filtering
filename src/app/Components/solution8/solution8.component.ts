@@ -1,10 +1,10 @@
-import { Component, computed, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CountryService } from '../../services/country.service';
 import { OptionComponent } from "../solution8/option.component";
 
@@ -51,7 +51,8 @@ export class Solution8Component implements OnInit {
     countries$: Observable<Country[]> = of([]);
     countrySearchSignal = signal("");
 
-    countryService = inject(CountryService);
+    private countryService = inject(CountryService);
+    private destroyRef = inject(DestroyRef); 
 
     searchFilter$!: Observable<string> 
 
@@ -65,13 +66,13 @@ export class Solution8Component implements OnInit {
       this.countries$ = this.searchFilter$.pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
+        switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm)),
+        takeUntilDestroyed(this.destroyRef)
       )
 
       console.log("Search:", form.controls['userName'].value);
     }  
 
-   constructor() { }
 
   computedValue = computed(() => {
 
@@ -86,7 +87,5 @@ export class Solution8Component implements OnInit {
     // console.log(`Signal (toSignal): ${JSON.stringify(this.countrySearchNameSignal())}`);
   });
 
-  ngOnInit() {
-
-  }
+ 
 }

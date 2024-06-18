@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal, effect, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, Signal, effect, inject } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
 import { FilterPipe } from '../../Pipes/filter.pipe';
@@ -42,11 +42,12 @@ import { CountryService } from '../../services/country.service';
   `,
 })
 export class Solution6Component {
-  title = '6- Pipe + Signal + Angular Reactive forms: formGroup, formControlName';
+  title = '6- Pipe + Signal + Angular Reactive forms: formGroup, formControlName + takeUntilDestroyed';
   countries$: Observable<Country[]> = of([]);
   searchFilter: string = '';
 
-  countryService = inject(CountryService);
+  private countryService = inject(CountryService);
+  private destroyRef = inject(DestroyRef)
 
   searchFilter$!: Observable<string> 
 
@@ -60,7 +61,9 @@ export class Solution6Component {
     });
   
     this.countrySearchNameSignal = toSignal(
-      this.filterForm.get('inputSearch')?.valueChanges.pipe(debounceTime(300)) 
+      this.filterForm.get('inputSearch')?.valueChanges.pipe(
+        debounceTime(300)
+      ) 
         ?? of(null),
       {}
     );
@@ -78,7 +81,8 @@ export class Solution6Component {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm))
-    )
+    ),
+    takeUntilDestroyed(this.destroyRef)
   }
   
 }
