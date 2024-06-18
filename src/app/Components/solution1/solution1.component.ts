@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CountryService } from '../../services/country.service';
@@ -33,13 +33,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         </ul>
     </div>`
 })
-export class Solution1Component {
+export class Solution1Component implements OnInit {
   title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding';
   searchFilterModel = '';
   countries$: Observable<Country[]> = of([]);
 
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
+
+  private destroyRef = inject(DestroyRef)
 
   countryService = inject(CountryService);
   
@@ -54,8 +56,11 @@ export class Solution1Component {
     this.countries$ = this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => this.countryService.searchCountries(searchTerm).pipe(takeUntilDestroyed()))
+      switchMap((searchTerm: string) => 
+        this.countryService.searchCountries(searchTerm)
+      ),
+      takeUntilDestroyed(this.destroyRef) // use takeUntilDestroyed(this.destroyRef) to automatically unsubscribe
     )
   }
-  
+
 }
