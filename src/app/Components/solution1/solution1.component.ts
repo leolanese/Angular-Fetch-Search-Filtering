@@ -31,7 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
             </div>
           }
         </ul>
-    </div>`
+    </div>`,
 })
 export class Solution1Component implements OnInit {
   title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding + takeUntilDestroyed';

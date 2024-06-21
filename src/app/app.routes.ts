@@ -41,6 +41,6 @@ export const routes: Routes = [
         path: 'solution10', 
         loadComponent: () => import('./Components/solution10/solution10.component').then(m => m.Solution10Component) 
     },
-    { path: '**', redirectTo: '' }
-  ];
+    {   path: '**', redirectTo: '' }
+];
 

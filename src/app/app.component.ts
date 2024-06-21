@@ -18,30 +18,19 @@ import { Solution10Component } from "./Components/solution10/solution10.componen
     template: `
       <h1>{{ title }}</h1>
 
-      <!-- <app-solution1></app-solution1>
-      <app-solution2></app-solution2>
-      <app-solution3></app-solution3> 
-      <app-solution4></app-solution4>
-      <app-solution5></app-solution5>
-      <app-solution6></app-solution6>
-      <app-solution7></app-solution7>
-      <app-solution8></app-solution8>
-      <app-solution9></app-solution9>
-      <app-solution10></app-solution10> -->
-
       <nav>
-      <a routerLink="/solution1">Solution 1</a> /
-      <a routerLink="/solution2">Solution 2</a> /
-      <a routerLink="/solution3">Solution 3</a> /
-      <a routerLink="/solution4">Solution 4</a> / 
-      <a routerLink="/solution5">Solution 5</a> /
-      <a routerLink="/solution6">Solution 6</a> /
-      <a routerLink="/solution7">Solution 7</a> /
-      <a routerLink="/solution8">Solution 8</a> /
-      <a routerLink="/solution9">Solution 9</a> /
-      <a routerLink="/solution10">Solution 10</a> /
-    </nav>
-    <router-outlet></router-outlet>
+        <a routerLink="/solution1">Solution 1</a> /
+        <a routerLink="/solution2">Solution 2</a> /
+        <a routerLink="/solution3">Solution 3</a> /
+        <a routerLink="/solution4">Solution 4</a> / 
+        <a routerLink="/solution5">Solution 5</a> /
+        <a routerLink="/solution6">Solution 6</a> /
+        <a routerLink="/solution7">Solution 7</a> /
+        <a routerLink="/solution8">Solution 8</a> /
+        <a routerLink="/solution9">Solution 9</a> /
+        <a routerLink="/solution10">Solution 10</a> /
+      </nav>
+      <router-outlet></router-outlet>
     `,
     imports: [
         RouterModule, RouterOutlet, HttpClientModule, CommonModule,
@@ -59,6 +48,6 @@ import { Solution10Component } from "./Components/solution10/solution10.componen
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'Angular search and filters playground area';
+  title = '⛔️ Angular search and filters playground area ⛔️';
 }
 
