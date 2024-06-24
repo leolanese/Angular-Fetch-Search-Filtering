@@ -34,7 +34,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     </div>`,
 })
 export class Solution1Component implements OnInit {
-  title = '1- Pipe + ngModel, ngModelOnChange + 2-way-binding + takeUntilDestroyed';
+  title = '1- Pipe + Template Driven form [(ngModel)], ngModelOnChange + 2-way-binding + takeUntilDestroyed';
   searchFilterModel = '';
 
   countries$: Observable<Country[]> = of([]);

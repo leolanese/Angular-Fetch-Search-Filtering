@@ -2,7 +2,7 @@ import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnI
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CountryService } from '../../services/country.service';
@@ -47,7 +47,7 @@ import { OptionComponent } from "../solution8/option.component";
               FormsModule, FilterPipe, OptionComponent]
 })
 export class Solution8Component {
-    title = '8- Pipe + Signal + Template-Driven forms (NgForm) + onSearch event + takeUntilDestroyed';
+    title = '8- Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed';
     countries$: Observable<Country[]> = of([]);
     countrySearchSignal = signal("");
 

@@ -1,8 +1,8 @@
-import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { CountryService } from '../../services/country.service';
 import { OptionComponent } from "../solution8/option.component";
@@ -47,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
               FormsModule, FilterPipe, OptionComponent]
 })
 export class Solution9Component {
-    title = '9- Pipe + Signal + 2-way-binding[()] + onSearch event + takeUntilDestroyed';
+    title = '9- Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed';
     countrySearchSignal = signal("");
 
     private countryService = inject(CountryService);
