@@ -2,7 +2,7 @@ import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnI
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { CountryService } from '../../services/country.service';
 import { OptionComponent } from "../solution8/option.component";
@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     <h3>{{ title }}</h3>
 
     <div class="container">
-      <form>
+      <form [formGroup]="form">
         <input 
           [formControl]="filter" 
           
@@ -40,7 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
               ReactiveFormsModule ]
 })
 export class Solution10Component {
-  title = '10- rxjs + ReactiveFormsModule + formControl + takeUntilDestroyed';
+  title = '10- rxjs + ReactiveFormsModule + FormGroup (optional) + formControl + takeUntilDestroyed';
   countries$: Observable<Country[]>;
 
   // Data describing 
@@ -51,7 +51,12 @@ export class Solution10Component {
   filter: FormControl;
   filter$: Observable<string>;
 
-  constructor() {
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      filter: ['']
+    });
     this.countries$ = of(countries) as any;
 
     this.filter = new FormControl("");

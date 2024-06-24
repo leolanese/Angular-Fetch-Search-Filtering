@@ -13,7 +13,7 @@
 
 ## Different solutions to filter data based on search input
 
-1) Pipe + ngModel, ngModelOnChange + 2-way-binding[()]
+1) Pipe + Template Driven form [(ngModel)], ngModelOnChange + 2-way-binding[()]
 
 2) Pipe + Template reference variable (#), event-binding() + searchSubject
 
@@ -27,9 +27,9 @@
 
 7) Pipe + Signal (based on stable values & optimise for efficient rendering) + Angular Reactive forms: formGroup, formControlName
 
-8) Pipe + Signal + Template-Driven forms (NgForm) + onSearch event 
+8) Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed
 
-9) Pipe + Signal + 2-way-binding[()] + onSearch event
+9) Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed
 
 10) rxjs + ReactiveFormsModule + formControlName (directly bind to specific input element within the template) + .valueChanges
 (based on https://github.com/leolanese/Angular-rxjs-filtering-list)
