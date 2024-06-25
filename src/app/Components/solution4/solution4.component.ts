@@ -23,6 +23,7 @@ interface Country {
      <div class="container">
       <!-- binds the <form> element to a FormGroup instance called filterForm -->
       <!-- As the user types in the input field, the "searchFilter" form control value is updated automatically by Reactive Forms -->
+     
       <form [formGroup]="filterForm">
           <input 
             matInput    
