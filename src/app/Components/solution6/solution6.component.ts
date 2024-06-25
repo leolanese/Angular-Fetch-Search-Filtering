@@ -20,6 +20,7 @@ import { CountryService } from '../../services/country.service';
       <form [formGroup]="filterForm">
           <input 
               formControlName="inputSearch"
+              
               class="form-control" 
               type="text" 
               name="search" 

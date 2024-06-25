@@ -18,9 +18,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
      <div class="container">
         <div class="row">
+
           <form [formGroup]="filterForm">
               <input 
                 formControlName="searchFilter"     
+                
                 class="form-control" 
                 type="text" 
                 name="search" 
