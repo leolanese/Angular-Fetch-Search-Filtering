@@ -15,10 +15,10 @@ import { FilterPipe } from '../../Pipes/filter.pipe';
             FormsModule, ReactiveFormsModule],
   template: `
    <h3>{{ title }}</h3>
-
    <div class="container">
+
       <form [formGroup]="filterForm">
-          <input 
+        <input 
             [formControl]="searchFilterFormControl" 
             type="text"
             class="form-control"

@@ -15,9 +15,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   template: `
     <h3>{{ title }}</h3>
     <div class="container">
+    
         <input 
           [(ngModel)]="searchFilterModel" 
           (ngModelChange)="onSearch($event)"
+
           type="text"
           class="form-control"
           placeholder="{{ title }}" />

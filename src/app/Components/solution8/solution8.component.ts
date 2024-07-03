@@ -16,6 +16,7 @@ import { OptionComponent } from "../solution8/option.component";
 
     <div class="container">
         <form>
+
           <input 
               [(ngModel)]="countrySearchSignal"
               name="userName" 
@@ -27,7 +28,7 @@ import { OptionComponent } from "../solution8/option.component";
               aria-label="search" 
               required />
            
-              <button (click)="onSearch()">Search</button>   
+          <button (click)="onSearch()">Search</button>   
         <ul> 
           @for(country of countries$ | async | filter: countrySearchSignal(); track country.idd){
             <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />

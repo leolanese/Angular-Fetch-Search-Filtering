@@ -16,8 +16,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     standalone: true,
     template: `
     <h3>{{ title }}</h3>
-
     <div class="container">
+    
       <form [formGroup]="form">
         <input 
           [formControl]="filter" 
@@ -28,6 +28,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
           placeholder="{{ title }}"
           aria-label="search" 
           required />
+
         <ul>
           <ng-container *ngFor="let country of filteredCountry$ | async">
              <li>{{ country.name }}</li>

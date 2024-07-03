@@ -14,11 +14,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   template: `
     <h3>{{ title }}</h3>
     <div class="container">
-      
       <form>
+
           <input
             #searchBox
             (input)="onSearch(searchBox.value)"
+            
             type="text"
             class="form-control"
             autocomplete="on" 
