@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { CountryService } from '../../services/country.service';
-import { OptionComponent } from "../solution8/option.component";
+
 import { countries } from "../../services/mocks/countries";
 import { map, startWith } from "rxjs/operators";
 import { combineLatest} from "rxjs";
