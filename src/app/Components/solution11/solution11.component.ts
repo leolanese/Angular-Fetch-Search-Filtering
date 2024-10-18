@@ -1,4 +1,3 @@
-// Update the import to use CountryService from jsonplaceholder.service
 import {CommonModule} from '@angular/common';
 
 import {Component,DestroyRef,inject,OnInit} from '@angular/core';
@@ -9,8 +8,8 @@ import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
 
 import {FilterInputComponent} from "./Filter-input.component";
 import {ListComponent} from "./List.component";
-import {PaginationComponent} from "./pagination.component";
-import {SortDropdownComponent} from "./sort-dropdown.component";
+import {PaginationComponent} from "./Pagination.component";
+import {SortDropdownComponent} from "./Sort-dropdown.component";
 
 import {SearchService} from '../../services/jsonplaceholder.service';
 
@@ -45,7 +44,7 @@ import {SearchService} from '../../services/jsonplaceholder.service';
 })
 export class Solution11Component implements OnInit {
   title = '10 - Search, Sort, and pagination using Array/List DS';
-  countries$: Observable<any[]> = of([]);
+  data$: Observable<any[]> = of([]);
   filteredCountry$!: Observable<any[]>;
   form: FormGroup;
   filter: FormControl;
@@ -67,7 +66,7 @@ export class Solution11Component implements OnInit {
   }
 
   ngOnInit() {
-    this.countries$ = this.searchService.getData();
+    this.data$ = this.searchService.getData();
 
     const filter$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -75,7 +74,7 @@ export class Solution11Component implements OnInit {
       debounceTime(300)
     );
 
-    this.filteredCountry$ = combineLatest([this.countries$, filter$]).pipe(
+    this.filteredCountry$ = combineLatest([this.data$, filter$]).pipe(
       map(([countries, filterString]) => {
         this.totalPages = Math.ceil(countries.length / this.pageSize);
         return this.applyFilterSortPagination(countries, filterString)
@@ -89,7 +88,7 @@ export class Solution11Component implements OnInit {
     this.sortOrder = sortOrder;
 
     this.sortDirection = sortOrder;
-    this.filteredCountry$ = this.countries$.pipe(
+    this.filteredCountry$ = this.data$.pipe(
       map(countries => this.applyFilterSortPagination(countries, this.filter.value)),
       takeUntilDestroyed(this.destroyRef) 
     );
@@ -126,7 +125,7 @@ export class Solution11Component implements OnInit {
   }
 
   private updateFilteredData() {
-    this.filteredCountry$ = this.countries$.pipe(
+    this.filteredCountry$ = this.data$.pipe(
       map(countries => this.applyFilterSortPagination(countries, this.filter.value))
     );
   }
