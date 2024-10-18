@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
 export const routes: Routes = [
     { 
@@ -40,6 +40,10 @@ export const routes: Routes = [
     { 
         path: 'solution10', 
         loadComponent: () => import('./Components/solution10/solution10.component').then(m => m.Solution10Component) 
+    },
+   { 
+        path: 'solution11', 
+        loadComponent: () => import('./Components/solution11/solution11.component').then(m => m.Solution11Component) 
     },
     {   path: '**', redirectTo: '' }
 ];
