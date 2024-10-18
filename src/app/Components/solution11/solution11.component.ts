@@ -1,14 +1,12 @@
+// Update the import to use CountryService from jsonplaceholder.service
 import {CommonModule} from '@angular/common';
-import {Component,DestroyRef,inject} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormBuilder,FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
-import {BehaviorSubject,combineLatest,debounceTime,distinctUntilChanged,Observable} from 'rxjs';
-import {map,startWith} from 'rxjs/operators';
 import {CountryService} from '../../services/jsonplaceholder.service';
 
-interface Country {
-  name: string;
-}
+// Existing imports...
+import {Component,OnInit} from '@angular/core';
+import {FormBuilder,FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
+import {combineLatest,Observable,of} from 'rxjs';
+import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-solution11',
@@ -17,124 +15,101 @@ interface Country {
     <h3>{{ title }}</h3>
     <div class="container">
       <form [formGroup]="form">
-        <input 
-          [formControl]="filter" 
-          class="form-control" 
-          type="text" 
-          autocomplete="on" 
-          placeholder="{{ title }}"
-          aria-label="search" 
-          required 
+        <input
+          [formControl]="filter"
+          class="form-control"
+          type="text"
+          placeholder="Search..."
         />
-        
         <select (change)="sort($event)">
           <option value="asc">Sort Ascending</option>
           <option value="desc">Sort Descending</option>
         </select>
-
         <ul>
-          <ng-container *ngFor="let country of paginatedCountries$ | async">
-            <li>{{ country.name }}</li>
-          </ng-container>
+          <li *ngFor="let country of filteredCountry$ | async">{{ country.name }}</li>
         </ul>
-
-        <div>
-          <button (click)="previousPage()" [disabled]="currentPage.value === 1">Previous</button>
-          <span>Page {{ currentPage.value }}</span>
-          <button (click)="nextPage()" [disabled]="currentPage.value === totalPages">Next</button>
-        </div>
+        <button (click)="previousPage()" [disabled]="currentPage <= 0">Previous</button>
+        <button (click)="nextPage()">Next</button>
       </form>
     </div>
   `,
   imports: [CommonModule, ReactiveFormsModule]
 })
-export class Solution11Component {
-  title = '11- RxJS + ReactiveFormsModule + FormGroup + FormControl';
-  countries$: Observable<Country[]>;
-  filteredCountries$: Observable<Country[]>;
-  paginatedCountries$: Observable<Country[]>;
-  
-  filter: FormControl;
+export class Solution11Component implements OnInit {
+  title = '10 - Pagination, Sort, and Search';
+  countries$: Observable<any[]> = of([]);
+  filteredCountry$!: Observable<any[]>;
   form: FormGroup;
+  filter: FormControl;
+  sortDirection: string = 'asc';
+  currentPage: number = 0;
+  pageSize: number = 5;
+  sortOrder: 'asc' | 'desc' = 'asc'; // Default sort order
 
-  private destroyRef = inject(DestroyRef);
-
-  // Pagination settings
-  private pageSize = 5;
-  currentPage = new BehaviorSubject<number>(1);
-  totalPages: number = 1;
-
-  // Sorting
-  private sortOrder = new BehaviorSubject<string>('asc');
-
-  constructor(private fb: FormBuilder, private countryService: CountryService) {
+  constructor(private countryService: CountryService, private fb: FormBuilder) {
     this.form = this.fb.group({
       filter: ['']
     });
+    this.filter = this.form.get('filter') as FormControl;
+  }
 
-    this.filter = new FormControl('');
+  ngOnInit() {
+    this.countries$ = this.countryService.getCountries(); // Fetch countries
+
     const filter$ = this.filter.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
-      takeUntilDestroyed(this.destroyRef)
+      debounceTime(300)
     );
 
-    // Fetch countries from the service
-    this.countries$ = this.countryService.getCountries().pipe(
-      takeUntilDestroyed(this.destroyRef)
-    );
-
-    // Filter the data based on the search input
-    this.filteredCountries$ = combineLatest([this.countries$, filter$]).pipe(
-      debounceTime(500),
-      map(([countries, filterString]) => 
-        countries.filter(country => 
-          country.name.toLowerCase().includes(filterString.toLowerCase())
-        )
-      ),
-      map(filteredCountries => {
-        this.totalPages = Math.ceil(filteredCountries.length / this.pageSize);
-        return filteredCountries;
-      })
-    );
-
-    // Handle sorting, pagination, and filtered data together
-    this.paginatedCountries$ = combineLatest([
-      this.filteredCountries$, 
-      this.currentPage, 
-      this.sortOrder
-    ]).pipe(
-      map(([countries, page, sortOrder]) => {
-        // Sort the data
-        const sortedCountries = [...countries].sort((a, b) => 
-          sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-        );
-        // Apply pagination
-        const startIndex = (page - 1) * this.pageSize;
-        return sortedCountries.slice(startIndex, startIndex + this.pageSize);
-      })
+    this.filteredCountry$ = combineLatest([this.countries$, filter$]).pipe(
+      map(([countries, filterString]) =>
+        this.applyFilterSortPagination(countries, filterString)
+      )
     );
   }
 
   sort(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    const sortOrder = target?.value;
+    const sortOrder = target.value as 'asc' | 'desc';
+    this.sortOrder = sortOrder;
 
-    if (sortOrder) {
-      // Proceed with your sorting logic here
-      console.log(`Sorting in ${sortOrder} order`);
-    }
+    this.sortDirection = sortOrder;
+    this.filteredCountry$ = this.countries$.pipe(
+      map(countries => this.applyFilterSortPagination(countries, this.filter.value))
+    );
   }
 
   nextPage() {
-    if (this.currentPage.value < this.totalPages) {
-      this.currentPage.next(this.currentPage.value + 1);
-    }
+    this.currentPage++;
+    this.updateFilteredData();
   }
 
   previousPage() {
-    if (this.currentPage.value > 1) {
-      this.currentPage.next(this.currentPage.value - 1);
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updateFilteredData();
     }
+  }
+
+  private applyFilterSortPagination(countries: any[], filterString: string) {
+    let filtered = countries.filter(country =>
+      country.name.toLowerCase().includes(filterString.toLowerCase())
+    );
+
+    filtered = filtered.sort((a, b) =>
+      this.sortDirection === 'asc'
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name)
+    );
+
+    const start = this.currentPage * this.pageSize;
+    return filtered.slice(start, start + this.pageSize);
+  }
+
+  private updateFilteredData() {
+    this.filteredCountry$ = this.countries$.pipe(
+      map(countries => this.applyFilterSortPagination(countries, this.filter.value))
+    );
   }
 }
