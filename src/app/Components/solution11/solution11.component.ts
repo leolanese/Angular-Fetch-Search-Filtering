@@ -66,7 +66,9 @@ export class Solution11Component implements OnInit {
   }
 
   ngOnInit() {
-    this.data$ = this.searchService.getData();
+    this.data$ = this.searchService.getData().pipe(
+      startWith([]) // Emit an empty array before the actual data arrives
+    );
 
     const filter$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -75,13 +77,14 @@ export class Solution11Component implements OnInit {
     );
 
     this.filteredCountry$ = combineLatest([this.data$, filter$]).pipe(
-      map(([countries, filterString]) => {
-      this.currentPage = 0; // Reset the current page whenever filtering changes
-      const filteredData = this.applyFilterSortPagination(countries, filterString);
-      this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Update total pages based on filtered data
-      // Slice the filtered data for pagination
-      const start = this.currentPage * this.pageSize;
-      return filteredData.slice(start, start + this.pageSize);
+      map(([values, filterString]) => {
+        this.currentPage = 0; // Reset the current page whenever filtering changes
+        const filteredData = this.applyFilterSortPagination(values, filterString);
+        this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Update total pages based on filtered data
+        // Slice the filtered data for pagination
+        const start = this.currentPage * this.pageSize;
+
+        return filteredData.slice(start, start + this.pageSize);
       }),
       takeUntilDestroyed(this.destroyRef) 
     );
@@ -93,7 +96,8 @@ export class Solution11Component implements OnInit {
 
     this.sortDirection = sortOrder;
     this.filteredCountry$ = this.data$.pipe(
-      map(countries => this.applyFilterSortPagination(countries, this.filter.value)),
+      startWith([]), // Ensure that an empty array is emitted immediately
+      map(values => this.applyFilterSortPagination(values, this.filter.value)),
       takeUntilDestroyed(this.destroyRef) 
     );
   }
@@ -123,20 +127,21 @@ export class Solution11Component implements OnInit {
         : b.name.localeCompare(a.name)
     );
 
-    // Pagination
-     return filtered;
+    return filtered;
   }
 
-private updateFilteredData() {
-  this.filteredCountry$ = this.data$.pipe(
-    map(countries => {
-      const filteredData = this.applyFilterSortPagination(countries, this.filter.value);
-      this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Recalculate total pages
-      const start = this.currentPage * this.pageSize;
-      return filteredData.slice(start, start + this.pageSize);
-    })
-  );
-}
+  private updateFilteredData() {
+    this.filteredCountry$ = this.data$.pipe(
+      startWith([]),
+      map(values => {
+        const filteredData = this.applyFilterSortPagination(values, this.filter.value);
+        this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Recalculate total pages
+        const start = this.currentPage * this.pageSize;
+
+        return filteredData.slice(start, start + this.pageSize);
+      })
+    );
+  }
 
   onPageChange(newPage: number) {
     this.currentPage = newPage;
