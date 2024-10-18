@@ -43,15 +43,15 @@ import {SearchService} from '../../services/jsonplaceholder.service';
   imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ListComponent, SortDropdownComponent, FilterInputComponent]
 })
 export class Solution11Component implements OnInit {
-  title = '10 - Search, Sort, and pagination using Array/List DS';
+  title = '10 - Search, Sort, and Pagination using Array/List Data Structure';
   data$: Observable<any[]> = of([]);
   filteredCountry$!: Observable<any[]>;
   form: FormGroup;
   filter: FormControl;
   sortDirection: string = 'asc';
-  currentPage: number = 0;
-  totalPages: number = 0;
-  pageSize: number = 3; 
+  currentPage = 0;
+  totalPages = 0;
+  pageSize = 3; 
   sortOrder: 'asc' | 'desc' = 'asc';
 
   private searchService = inject(SearchService)
@@ -126,7 +126,7 @@ export class Solution11Component implements OnInit {
 
   private updateFilteredData() {
     this.filteredCountry$ = this.data$.pipe(
-      map(countries => this.applyFilterSortPagination(countries, this.filter.value))
+      map(val => this.applyFilterSortPagination(val, this.filter.value))
     );
   }
 
