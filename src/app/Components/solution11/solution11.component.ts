@@ -76,8 +76,12 @@ export class Solution11Component implements OnInit {
 
     this.filteredCountry$ = combineLatest([this.data$, filter$]).pipe(
       map(([countries, filterString]) => {
-        this.totalPages = Math.ceil(countries.length / this.pageSize);
-        return this.applyFilterSortPagination(countries, filterString)
+      this.currentPage = 0; // Reset the current page whenever filtering changes
+      const filteredData = this.applyFilterSortPagination(countries, filterString);
+      this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Update total pages based on filtered data
+      // Slice the filtered data for pagination
+      const start = this.currentPage * this.pageSize;
+      return filteredData.slice(start, start + this.pageSize);
       }),
       takeUntilDestroyed(this.destroyRef) 
     );
@@ -120,15 +124,19 @@ export class Solution11Component implements OnInit {
     );
 
     // Pagination
-    const start = this.currentPage * this.pageSize;
-    return filtered.slice(start, start + this.pageSize);
+     return filtered;
   }
 
-  private updateFilteredData() {
-    this.filteredCountry$ = this.data$.pipe(
-      map(val => this.applyFilterSortPagination(val, this.filter.value))
-    );
-  }
+private updateFilteredData() {
+  this.filteredCountry$ = this.data$.pipe(
+    map(countries => {
+      const filteredData = this.applyFilterSortPagination(countries, this.filter.value);
+      this.totalPages = Math.ceil(filteredData.length / this.pageSize); // Recalculate total pages
+      const start = this.currentPage * this.pageSize;
+      return filteredData.slice(start, start + this.pageSize);
+    })
+  );
+}
 
   onPageChange(newPage: number) {
     this.currentPage = newPage;
