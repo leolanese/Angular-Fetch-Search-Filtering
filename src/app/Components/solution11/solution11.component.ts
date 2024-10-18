@@ -28,7 +28,9 @@ import {SearchService} from '../../services/jsonplaceholder.service';
         <app-sort-dropdown (sortChanged)="sort($event)"></app-sort-dropdown>
 
         <!-- List -->
-        <app-list [countries]="(filteredCountry$ | async) ?? []"></app-list>
+       <app-list [countries]="(filteredCountry$ | async) ?? []"></app-list>
+       <p>Row/page: {{ pageSize }}</p>
+       <p>Total found: {{ filteredCount }}</p>
 
         <!-- Pagination -->
         <app-pagination
@@ -53,6 +55,7 @@ export class Solution11Component implements OnInit {
   totalPages = 0;
   pageSize = 3; 
   sortOrder: 'asc' | 'desc' = 'asc';
+  filteredCount = 0;
 
   private searchService = inject(SearchService)
   private fb = inject(FormBuilder)
@@ -119,6 +122,9 @@ export class Solution11Component implements OnInit {
     let filtered = countries.filter(country =>
       country.name.toLowerCase().includes(filterString.toLowerCase())
     );
+
+      // Update the count of filtered data
+  this.filteredCount = filtered.length;
 
     // sorting
     filtered = filtered.sort((a, b) =>
