@@ -2,11 +2,13 @@
 import {CommonModule} from '@angular/common';
 import {CountryService} from '../../services/jsonplaceholder.service';
 
-// Existing imports...
-import {Component,OnInit} from '@angular/core';
+import {Component,DestroyRef,inject,OnInit} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormBuilder,FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
 import {combineLatest,Observable,of} from 'rxjs';
 import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
+import {CountryListComponent} from "./List.component";
+import {PaginationComponent} from "./pagination.component";
 
 @Component({
   selector: 'app-solution11',
@@ -19,34 +21,46 @@ import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
           [formControl]="filter"
           class="form-control"
           type="text"
-          placeholder="Search..."
+          placeholder="Filer Name (Patricia, Kurtis,etc)..."
         />
+
         <select (change)="sort($event)">
           <option value="asc">Sort Ascending</option>
           <option value="desc">Sort Descending</option>
         </select>
-        <ul>
-          <li *ngFor="let country of filteredCountry$ | async">{{ country.name }}</li>
-        </ul>
-        <button (click)="previousPage()" [disabled]="currentPage <= 0">Previous</button>
-        <button (click)="nextPage()">Next</button>
+
+        <!-- List -->
+        <app-list [countries]="(filteredCountry$ | async) ?? []"></app-list>
+
+        <!-- Pagination -->
+        <app-pagination
+          [currentPage]="currentPage"
+          [totalPages]="totalPages"
+          (pageChange)="onPageChange($event)">
+        </app-pagination>
+
       </form>
     </div>
   `,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, CountryListComponent]
 })
 export class Solution11Component implements OnInit {
-  title = '10 - Pagination, Sort, and Search';
+  title = '10 - Search, Sort, and pagination using Array/List DS';
   countries$: Observable<any[]> = of([]);
   filteredCountry$!: Observable<any[]>;
   form: FormGroup;
   filter: FormControl;
   sortDirection: string = 'asc';
   currentPage: number = 0;
-  pageSize: number = 5;
-  sortOrder: 'asc' | 'desc' = 'asc'; // Default sort order
+  totalPages: number = 0;
+  pageSize: number = 3; 
+  sortOrder: 'asc' | 'desc' = 'asc';
 
-  constructor(private countryService: CountryService, private fb: FormBuilder) {
+  private countryService = inject(CountryService)
+  private fb = inject(FormBuilder)
+  private destroyRef = inject(DestroyRef)
+
+  constructor() {
     this.form = this.fb.group({
       filter: ['']
     });
@@ -54,7 +68,7 @@ export class Solution11Component implements OnInit {
   }
 
   ngOnInit() {
-    this.countries$ = this.countryService.getCountries(); // Fetch countries
+    this.countries$ = this.countryService.getCountries();
 
     const filter$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -63,10 +77,13 @@ export class Solution11Component implements OnInit {
     );
 
     this.filteredCountry$ = combineLatest([this.countries$, filter$]).pipe(
-      map(([countries, filterString]) =>
-        this.applyFilterSortPagination(countries, filterString)
-      )
+      map(([countries, filterString]) => {
+        this.totalPages = Math.ceil(countries.length / this.pageSize);
+        return this.applyFilterSortPagination(countries, filterString)
+      }),
+      takeUntilDestroyed(this.destroyRef) 
     );
+    
   }
 
   sort(event: Event): void {
@@ -76,7 +93,8 @@ export class Solution11Component implements OnInit {
 
     this.sortDirection = sortOrder;
     this.filteredCountry$ = this.countries$.pipe(
-      map(countries => this.applyFilterSortPagination(countries, this.filter.value))
+      map(countries => this.applyFilterSortPagination(countries, this.filter.value)),
+      takeUntilDestroyed(this.destroyRef)
     );
   }
 
@@ -93,16 +111,19 @@ export class Solution11Component implements OnInit {
   }
 
   private applyFilterSortPagination(countries: any[], filterString: string) {
+    // Filtering
     let filtered = countries.filter(country =>
       country.name.toLowerCase().includes(filterString.toLowerCase())
     );
 
+    // sorting
     filtered = filtered.sort((a, b) =>
       this.sortDirection === 'asc'
         ? a.name.localeCompare(b.name)
         : b.name.localeCompare(a.name)
     );
 
+    // Pagination
     const start = this.currentPage * this.pageSize;
     return filtered.slice(start, start + this.pageSize);
   }
@@ -112,4 +133,10 @@ export class Solution11Component implements OnInit {
       map(countries => this.applyFilterSortPagination(countries, this.filter.value))
     );
   }
+
+  onPageChange(newPage: number) {
+    this.currentPage = newPage;
+    this.updateFilteredData();
+  }
+  
 }
