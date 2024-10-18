@@ -1,14 +1,18 @@
 // Update the import to use CountryService from jsonplaceholder.service
 import {CommonModule} from '@angular/common';
-import {CountryService} from '../../services/jsonplaceholder.service';
 
 import {Component,DestroyRef,inject,OnInit} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormBuilder,FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
 import {combineLatest,Observable,of} from 'rxjs';
 import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
-import {CountryListComponent} from "./List.component";
+
+import {FilterInputComponent} from "./Filter-input.component";
+import {ListComponent} from "./List.component";
 import {PaginationComponent} from "./pagination.component";
+import {SortDropdownComponent} from "./sort-dropdown.component";
+
+import {SearchService} from '../../services/jsonplaceholder.service';
 
 @Component({
   selector: 'app-solution11',
@@ -17,17 +21,12 @@ import {PaginationComponent} from "./pagination.component";
     <h3>{{ title }}</h3>
     <div class="container">
       <form [formGroup]="form">
-        <input
-          [formControl]="filter"
-          class="form-control"
-          type="text"
-          placeholder="Filer Name (Patricia, Kurtis,etc)..."
-        />
+        
+        <!-- Filter Input -->
+        <app-filter-input [filterControl]="filter"></app-filter-input>
 
-        <select (change)="sort($event)">
-          <option value="asc">Sort Ascending</option>
-          <option value="desc">Sort Descending</option>
-        </select>
+        <!-- Sort Dropdown -->
+        <app-sort-dropdown (sortChanged)="sort($event)"></app-sort-dropdown>
 
         <!-- List -->
         <app-list [countries]="(filteredCountry$ | async) ?? []"></app-list>
@@ -42,7 +41,7 @@ import {PaginationComponent} from "./pagination.component";
       </form>
     </div>
   `,
-  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, CountryListComponent]
+  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ListComponent, SortDropdownComponent, FilterInputComponent]
 })
 export class Solution11Component implements OnInit {
   title = '10 - Search, Sort, and pagination using Array/List DS';
@@ -56,7 +55,7 @@ export class Solution11Component implements OnInit {
   pageSize: number = 3; 
   sortOrder: 'asc' | 'desc' = 'asc';
 
-  private countryService = inject(CountryService)
+  private searchService = inject(SearchService)
   private fb = inject(FormBuilder)
   private destroyRef = inject(DestroyRef)
 
@@ -68,7 +67,7 @@ export class Solution11Component implements OnInit {
   }
 
   ngOnInit() {
-    this.countries$ = this.countryService.getCountries();
+    this.countries$ = this.searchService.getData();
 
     const filter$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -86,15 +85,13 @@ export class Solution11Component implements OnInit {
     
   }
 
-  sort(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const sortOrder = target.value as 'asc' | 'desc';
+  sort(sortOrder: 'asc' | 'desc'): void {
     this.sortOrder = sortOrder;
 
     this.sortDirection = sortOrder;
     this.filteredCountry$ = this.countries$.pipe(
       map(countries => this.applyFilterSortPagination(countries, this.filter.value)),
-      takeUntilDestroyed(this.destroyRef)
+      takeUntilDestroyed(this.destroyRef) 
     );
   }
 

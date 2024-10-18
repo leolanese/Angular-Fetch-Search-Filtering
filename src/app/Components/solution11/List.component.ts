@@ -11,6 +11,6 @@ import {Component,Input} from '@angular/core';
   `,
   imports: [CommonModule]
 })
-export class CountryListComponent {
+export class ListComponent {
   @Input() countries: any[] = [];
 }

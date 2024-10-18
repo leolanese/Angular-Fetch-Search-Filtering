@@ -10,13 +10,12 @@ interface Country {
 @Injectable({
   providedIn: 'root',
 })
-export class CountryService {
+export class SearchService {
   private apiUrl = 'https://jsonplaceholder.typicode.com/users'; // JSONPlaceholder URL
 
   constructor(private http: HttpClient) {}
-
-  // Define the getCountries() method
-  getCountries(): Observable<Country[]> {
+  
+  getData(): Observable<Country[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       // Transform the data to the expected structure
       map(users => users.map(user => ({ name: user.name })))

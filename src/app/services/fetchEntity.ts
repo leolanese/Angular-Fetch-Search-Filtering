@@ -1,8 +1,7 @@
-import { inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {Observable,of} from 'rxjs';
+import {catchError,map} from 'rxjs/operators';
 
 export const searchCountryEntity = (term: string): (() => Observable<any>) => {
   const http = inject(HttpClient);
