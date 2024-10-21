@@ -123,8 +123,8 @@ export class Solution11Component implements OnInit {
       country.name.toLowerCase().includes(filterString.toLowerCase())
     );
 
-      // Update the count of filtered data
-  this.filteredCount = filtered.length;
+    // Update the count of filtered data
+    this.filteredCount = filtered.length;
 
     // sorting
     filtered = filtered.sort((a, b) =>
