@@ -29,7 +29,6 @@ import {SearchService} from '../../services/jsonplaceholder.service';
 
         <!-- List -->
        <app-list [countries]="(filteredCountry$ | async) ?? []"></app-list>
-       <p>Row/page: {{ pageSize }}</p>
        <p>Total found: {{ filteredCount }}</p>
 
         <!-- Pagination -->
@@ -91,6 +90,13 @@ export class Solution11Component implements OnInit {
       }),
       takeUntilDestroyed(this.destroyRef) 
     );
+
+    // Subscribe to filter changes to update the filtered data immediately
+    filter$.pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+      this.updateFilteredData(); // Call to update the filtered data immediately
+    });
     
   }
 

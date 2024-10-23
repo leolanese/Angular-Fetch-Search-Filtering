@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-interface Country {
+interface Names {
   name: string;
 }
 
@@ -11,11 +11,11 @@ interface Country {
   providedIn: 'root',
 })
 export class SearchService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/users'; // JSONPlaceholder URL
+  private apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private http: HttpClient) {}
   
-  getData(): Observable<Country[]> {
+  getData(): Observable<Names[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       // Transform the data to the expected structure
       map(users => users.map(user => ({ name: user.name })))
