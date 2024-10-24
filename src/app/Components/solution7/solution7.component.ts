@@ -1,11 +1,11 @@
-import { Component, computed, DestroyRef, effect, inject, input, OnInit, signal, Signal } from '@angular/core';
-import { debounceTime, distinctUntilChanged, Observable, of, startWith, switchMap } from 'rxjs';
-import { Country } from '../../Modules/country';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FilterPipe } from '../../Pipes/filter.pipe';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { CountryService } from '../../services/country.service';
+import {CommonModule} from '@angular/common';
+import {Component,DestroyRef,inject,OnInit,Signal} from '@angular/core';
+import {takeUntilDestroyed,toSignal} from '@angular/core/rxjs-interop';
+import {FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
+import {debounceTime,distinctUntilChanged,Observable,of,startWith,switchMap} from 'rxjs';
+import {Country} from '../../Modules/country';
+import {FilterPipe} from '../../Pipes/filter.pipe';
+import {CountryService} from '../../services/country.service';
 
 @Component({
     selector: 'app-solution7',
@@ -24,7 +24,7 @@ import { CountryService } from '../../services/country.service';
               placeholder="{{ title }}"
               aria-label="search" />
 
-      <ul>
+          <ul>
             @for(country of countries$ | async | filter: countrySearchNameSignal() ; track country.idd){
               <img src="{{ country.flags.svg }}" alt="Flag of {{ country.name.official }}" class="country-flag" />
               <div class="d-flex align-items-center ms-3">

@@ -1,11 +1,11 @@
-import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
-import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
-import { Country } from '../../Modules/country';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { FilterPipe } from '../../Pipes/filter.pipe';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { CountryService } from '../../services/country.service';
+import {CommonModule} from '@angular/common';
+import {Component,computed,DestroyRef,effect,inject,signal,viewChild} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {FormsModule,NgForm,ReactiveFormsModule} from '@angular/forms';
+import {debounceTime,distinctUntilChanged,Observable,of,switchMap} from 'rxjs';
+import {Country} from '../../Modules/country';
+import {FilterPipe} from '../../Pipes/filter.pipe';
+import {CountryService} from '../../services/country.service';
 
 @Component({
     selector: 'app-solution8',
@@ -86,6 +86,5 @@ export class Solution8Component {
   initialiseSearch = effect(() => {
     // console.log(`Signal (toSignal): ${JSON.stringify(this.countrySearchNameSignal())}`);
   });
-
  
 }

@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, map, of, switchMap, takeUntil } from 'rxjs';
-import { Ng2SearchPipeModule } from '@ngx-maintenance/ng2-search-filter';
-import { CountryService } from '../../services/country.service';
-import { Country } from '../../Modules/country';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {CommonModule} from '@angular/common';
+import {Component,DestroyRef,OnInit,inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {FormControl,FormGroup,FormsModule,ReactiveFormsModule} from '@angular/forms';
+import {Ng2SearchPipeModule} from '@ngx-maintenance/ng2-search-filter';
+import {Observable,debounceTime,distinctUntilChanged,map,of,switchMap} from 'rxjs';
+import {Country} from '../../Modules/country';
+import {CountryService} from '../../services/country.service';
 
 @Component({
   selector: 'app-solution5',

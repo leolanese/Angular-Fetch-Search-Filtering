@@ -44,7 +44,7 @@ import {SearchService} from '../../services/jsonplaceholder.service';
   imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ListComponent, SortDropdownComponent, FilterInputComponent]
 })
 export class Solution11Component implements OnInit {
-  title = '10 - Search, Sort, and Pagination Components using Array/List Data Structure';
+  title = '10 - Component Driven (Search, Filter, Sort, Pagination) using Array/List Data Structure';
   data$: Observable<any[]> = of([]);
   filteredCountry$!: Observable<any[]>;
   form: FormGroup;
@@ -123,10 +123,10 @@ export class Solution11Component implements OnInit {
     }
   }
 
-  private applyFilterSortPagination(countries: any[], filterString: string) {
+  private applyFilterSortPagination(values: any[], filterString: string) {
     // Filtering
-    let filtered = countries.filter(country =>
-      country.name.toLowerCase().includes(filterString.toLowerCase())
+    let filtered = values.filter(data =>
+      data.name.toLowerCase().includes(filterString.toLowerCase())
     );
 
     // Update the count of filtered data
