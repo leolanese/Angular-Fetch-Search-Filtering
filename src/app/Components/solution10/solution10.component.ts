@@ -1,15 +1,11 @@
-import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
-import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
-import { Country } from '../../Modules/country';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { FilterPipe } from '../../Pipes/filter.pipe';
-import { CountryService } from '../../services/country.service';
-import { OptionComponent } from "../solution8/option.component";
-import { countries } from "../../services/mocks/countries";
-import { map, startWith } from "rxjs/operators";
-import { combineLatest} from "rxjs";
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { combineLatest, debounceTime, distinctUntilChanged, Observable, of } from 'rxjs';
+import { map, startWith } from "rxjs/operators";
+import { Country } from '../../Modules/country';
+import { countries } from "../../services/mocks/countries";
 
 @Component({
     selector: 'app-solution10',
@@ -38,7 +34,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     </div>
   `,
     imports: [CommonModule,
-              ReactiveFormsModule ]
+              ReactiveFormsModule]
 })
 export class Solution10Component {
   title = '10- rxjs + ReactiveFormsModule + FormGroup (optional) + formControl + takeUntilDestroyed';

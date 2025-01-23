@@ -1,13 +1,13 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, withRouterConfig } from '@angular/router';
 
-import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { LocalInterceptorFn } from './interceptors/local.fn';
-import { HttpTrafficInterceptorFn } from './interceptors/http.fn';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatInputModule } from '@angular/material/input';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { routes } from './app.routes';
+import { HttpTrafficInterceptorFn } from './interceptors/http.fn';
+import { LocalInterceptorFn } from './interceptors/local.fn';
 
 // FIXED: No provider for _HttpClient
 export const appConfig: ApplicationConfig = {
@@ -25,6 +25,7 @@ export const appConfig: ApplicationConfig = {
         LocalInterceptorFn,
         HttpTrafficInterceptorFn,
       ])),
-    provideAnimations(), provideAnimationsAsync(),
+    provideAnimations(), 
+    provideAnimationsAsync(),
   ]
 };

@@ -1,12 +1,11 @@
-import { Component, computed, DestroyRef, effect, ElementRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, DestroyRef, effect, inject, signal, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { Country } from '../../Modules/country';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../Pipes/filter.pipe';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CountryService } from '../../services/country.service';
-import { OptionComponent } from "../solution8/option.component";
 
 @Component({
     selector: 'app-solution8',
@@ -45,7 +44,7 @@ import { OptionComponent } from "../solution8/option.component";
   `,
     imports: [CommonModule,
               ReactiveFormsModule,
-              FormsModule, FilterPipe, OptionComponent]
+              FormsModule, FilterPipe]
 })
 export class Solution8Component {
     title = '8- Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed';
