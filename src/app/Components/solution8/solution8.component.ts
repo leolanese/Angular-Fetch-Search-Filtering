@@ -45,6 +45,7 @@ import { CountryService } from '../../services/country.service';
     imports: [CommonModule,
               ReactiveFormsModule,
               FormsModule, FilterPipe]
+              FormsModule, FilterPipe]
 })
 export class Solution8Component {
     title = '8- Pipe + Signal + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed';
@@ -86,6 +87,5 @@ export class Solution8Component {
   initialiseSearch = effect(() => {
     // console.log(`Signal (toSignal): ${JSON.stringify(this.countrySearchNameSignal())}`);
   });
-
  
 }

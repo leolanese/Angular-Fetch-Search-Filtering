@@ -1,6 +1,9 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
+import {HomeComponent} from './Components/home/home.component';
+import {PageNotFoundComponent} from './page-not-found.component';
 
 export const routes: Routes = [
+    { path: 'home', component: HomeComponent },
     { 
       path: 'solution1', 
       loadComponent: () => import('./Components/solution1/solution1.component').then(m => m.Solution1Component) 
@@ -41,6 +44,11 @@ export const routes: Routes = [
         path: 'solution10', 
         loadComponent: () => import('./Components/solution10/solution10.component').then(m => m.Solution10Component) 
     },
-    {   path: '**', redirectTo: '' }
+    { 
+        path: 'solution11', 
+        loadComponent: () => import('./Components/solution11/solution11.component').then(m => m.Solution11Component) 
+    },
+    {   path: '', redirectTo: 'home', pathMatch: 'full' },
+    {   path: '**', component: PageNotFoundComponent }
 ];
 
