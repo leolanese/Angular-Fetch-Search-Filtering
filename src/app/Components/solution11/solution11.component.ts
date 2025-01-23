@@ -1,17 +1,17 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-import {Component,DestroyRef,inject,OnInit} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormBuilder,FormControl,FormGroup,ReactiveFormsModule} from '@angular/forms';
-import {combineLatest,Observable,of} from 'rxjs';
-import {debounceTime,distinctUntilChanged,map,startWith} from 'rxjs/operators';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { combineLatest, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 
-import {FilterInputComponent} from "./Filter-input.component";
-import {ListComponent} from "./List.component";
-import {PaginationComponent} from "./Pagination.component";
-import {SortDropdownComponent} from "./Sort-dropdown.component";
+import { FilterInputComponent } from "./Filter-input.component";
+import { ListComponent } from "./List.component";
+import { PaginationComponent } from "./pagination.component";
+import { SortDropdownComponent } from "./sort-dropdown.component";
 
-import {SearchService} from '../../services/jsonplaceholder.service';
+import { SearchService } from '../../services/jsonplaceholder.service';
 
 @Component({
   selector: 'app-solution11',

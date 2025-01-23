@@ -44,7 +44,6 @@ import { CountryService } from '../../services/country.service';
     imports: [CommonModule,
               ReactiveFormsModule,
               FormsModule, FilterPipe]
-              FormsModule, FilterPipe]
 })
 export class Solution9Component {
     title = '9- Pipe + signal + DestroyRef + Template Driven form [(ngModel)] + onSearch event + takeUntilDestroyed';
