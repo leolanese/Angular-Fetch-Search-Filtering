@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { combineLatest, debounceTime, distinctUntilChanged, Observable, of } from 'rxjs';
 import { map, startWith } from "rxjs/operators";
 import { Country } from '../../Modules/country';
@@ -12,11 +12,11 @@ import { countries } from "../../services/mocks/countries";
     standalone: true,
     template: `
     <h3>{{ title }}</h3>
-    <div class="container">
+    <div class="container">   
     
       <form [formGroup]="form">
         <input 
-          [formControl]="filter" 
+          formControlName="filter"
           
           class="form-control" 
           type="text" 
@@ -24,6 +24,15 @@ import { countries } from "../../services/mocks/countries";
           placeholder="{{ title }}"
           aria-label="search" 
           required />
+
+        <div *ngIf="form.controls['filter'].invalid && (form.controls['filter'].dirty || form.controls['filter'].touched)">
+          <small class="text-danger" *ngIf="form.controls['filter'].errors?.['required']">
+            This field is required.
+          </small>
+          <small class="text-danger" *ngIf="form.controls['filter'].errors?.['minlength']">
+            Minimum length is 3 characters.
+          </small>
+        </div>
 
         <ul>
           <ng-container *ngFor="let country of filteredCountry$ | async">
@@ -52,7 +61,7 @@ export class Solution10Component {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      filter: ['']
+      filter: ['', [Validators.required, Validators.minLength(3)]]
     });
     this.countries$ = of(countries) as any;
 
